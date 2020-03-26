@@ -15,7 +15,6 @@ class CreateCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->bigIncrements('id')->comment("댓글 번호");
-            $table->text('content')->comment("게시글 내용");
 
             $table->unsignedBigInteger('comment_writer_id')->comment("댓글 작성자 번호");
             $table->foreign('comment_writer_id')->references('id')->on('users')->onDelete('cascade');

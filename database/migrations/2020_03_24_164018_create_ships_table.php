@@ -16,9 +16,10 @@ class CreateShipsTable extends Migration
         Schema::create('ships', function (Blueprint $table) {
             $table->bigIncrements('id')->comment("배 번호");
 
+            // $table->foreign('owner_id')->references('id')->on('ship_owners')->comment("업자 번호");
             $table->unsignedBigInteger('owner_id')->comment("업자 번호");
             $table->foreign('owner_id')->references('id')->on('ship_owners')->onDelete('cascade');
-            
+
             $table->integer('people')->comment("인원");
             $table->integer('cost')->comment("비용");
 
