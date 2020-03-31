@@ -15,8 +15,10 @@ class User extends Authenticatable
      *
      * @var array
      */
+
+    # request->all()함수를 사용했을 시 할당할 데이터 (대량할당), 이 이외의 칼럼값은 가져오지 않음.
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','nickname','roles','phone_number','profile_photo'
     ];
 
     /**
@@ -36,4 +38,36 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // 하나의 회원은 여러 글을 가질 수 있다
+    public function boards()
+    {
+        return $this->hasMany('App\Board');
+    }
+
+    // 하나의 회원은 여러 댓글을 가질 수 있다
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
+
+    // 하나의 회원은 여러 배 영업을 가질 수 있다
+    public function ship_owners()
+    {
+        return $this->hasMany('App\ShipOwner');
+    }
+
+    // 하나의 회원은 여러 배 대여를 가질 수 있다
+    public function ship_rentals()
+    {
+        return $this->hasMany('App\ShipRental');
+    }
+
+    // 하나의 회원은 여러 랭킹을 가질 수 있다
+    public function rakings()
+    {
+        return $this->hasMany('App\Ranking');
+    }
+
+
 }
