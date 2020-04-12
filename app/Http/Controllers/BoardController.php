@@ -13,7 +13,9 @@ class BoardController extends Controller
      */
     public function index()
     {
-        //
+        //게시글 리스트 
+        $boards =  DB::table('boards')->get();
+        return view('test')->with('boards', $boards);
     }
 
     /**
