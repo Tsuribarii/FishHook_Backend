@@ -21,6 +21,12 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/test', 'BoardController@index');
+Route::get('/list', 'BoardController@index')->name('list');
+
+Route::get('/create', 'BoardController@create');
+
+Route::post('/store', 'BoardController@store');
+
+Route::get('/show', 'BoardController@show');
 
 // Route::resource('boards', 'BoardController');
