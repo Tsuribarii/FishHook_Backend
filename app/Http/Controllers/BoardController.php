@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Board;
 
 class BoardController extends Controller
 {
@@ -11,11 +12,18 @@ class BoardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        //모델과 컨트롤러 연결
+        $this->board_model = new Board();
+    }
+
     public function index()
     {
         //게시글 리스트 
-        $boards =  DB::table('boards')->get();
-        return view('test')->with('boards', $boards);
+        $boards =  Board::all();
+        return view('list')->with('boards', $boards);
     }
 
     /**
@@ -25,7 +33,7 @@ class BoardController extends Controller
      */
     public function create()
     {
-        //
+        return view('create');
     }
 
     /**
@@ -36,7 +44,17 @@ class BoardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Board::insert([
+            'user_id'=>$request->user_id,
+            'title'=>$request->title,
+            'species'=>$request->species,
+            'tide'=>$request->tide,
+            'bait'=>$request->bait,
+            'location'=>$request->location,
+            'content'=>$request->content
+            ]);
+
+        return redirect(route('list'));
     }
 
     /**
@@ -47,7 +65,9 @@ class BoardController extends Controller
      */
     public function show($id)
     {
-        //
+        return $request;
+        // $boards = Board::where('id',$id)->first();
+        // return view('show')->with('boards',$boards);
     }
 
     /**
