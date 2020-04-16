@@ -27,6 +27,12 @@ Route::get('/create', 'BoardController@create');
 
 Route::post('/store', 'BoardController@store');
 
-Route::get('/show', 'BoardController@show');
+Route::get('/show/{id}', 'BoardController@show');
+
+Route::get('/edit/{id}', 'BoardController@edit');
+
+Route::post('/update/{id}', 'BoardController@update');
+
+Route::get('/delete/{id}', 'BoardController@destroy');
 
 // Route::resource('boards', 'BoardController');

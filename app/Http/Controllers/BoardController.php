@@ -22,8 +22,8 @@ class BoardController extends Controller
     public function index()
     {
         //게시글 리스트 
-        $boards =  Board::all();
-        return view('list')->with('boards', $boards);
+        $board =  Board::all();
+        return view('list')->with('boards', $board);
     }
 
     /**
@@ -65,9 +65,10 @@ class BoardController extends Controller
      */
     public function show($id)
     {
-        return $request;
-        // $boards = Board::where('id',$id)->first();
-        // return view('show')->with('boards',$boards);
+        // return $id;
+        //board테이블의 id컬럼에서 $id의 정보를 가져옴
+        $board = Board::where('id',$id)->first();
+        return view('show')->with('board',$board);
     }
 
     /**
@@ -78,7 +79,8 @@ class BoardController extends Controller
      */
     public function edit($id)
     {
-        //
+        $board = Board::where('id',$id)->first();
+        return view('edit')->with('board',$board);
     }
 
     /**
@@ -90,7 +92,17 @@ class BoardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Board::where('id',$id)->update([
+            // 'user_id'=>$request->user_id,
+            'title'=>$request->title,
+            'species'=>$request->species,
+            'tide'=>$request->tide,
+            'bait'=>$request->bait,
+            'location'=>$request->location,
+            'content'=>$request->content
+            ]);
+        // insert 나 delete update 했을 경우 view로 연결할 때는 redirect
+        return redirect('show/' .$id);
     }
 
     /**
@@ -101,6 +113,7 @@ class BoardController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Board::where('id',$id)->delete();
+        return redirect('list');
     }
 }
