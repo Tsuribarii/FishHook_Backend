@@ -7,9 +7,7 @@
     <h1>글 작성</h1>
     <form method="POST" action="{{ url('/store') }}">
         @csrf
-        <div>
-            <input type="text" name="user_id" placeholder="글쓴이">
-        </div>
+        
         <div>
             <input type="text" name="title" placeholder="제목">
         </div>

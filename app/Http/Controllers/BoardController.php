@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Board;
+use App\User;
 
 class BoardController extends Controller
 {
@@ -23,6 +24,7 @@ class BoardController extends Controller
     {
         //게시글 리스트 
         $board =  Board::all();
+        // $user = User::where('id',$board->user_id)->first();
         return view('list')->with('boards', $board);
     }
 
@@ -45,7 +47,7 @@ class BoardController extends Controller
     public function store(Request $request)
     {
         Board::insert([
-            'user_id'=>$request->user_id,
+            'user_id'=> \Auth::id(),
             'title'=>$request->title,
             'species'=>$request->species,
             'tide'=>$request->tide,
@@ -66,9 +68,11 @@ class BoardController extends Controller
     public function show($id)
     {
         // return $id;
+        
         //board테이블의 id컬럼에서 $id의 정보를 가져옴
         $board = Board::where('id',$id)->first();
-        return view('show')->with('board',$board);
+        $user = User::where('id',$board->user_id)->first();
+        return view('show')->with('board',$board)->with('user',$user);
     }
 
     /**
