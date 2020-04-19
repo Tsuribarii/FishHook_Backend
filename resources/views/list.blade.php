@@ -10,8 +10,9 @@
         <h1>글 목록</h1>
         <table>
             <tr>
-                <th>Title</th>
-                <th>Content
+                <th>제목</th>
+                <th>내용</th>
+                <th>글쓴이</th>
                 <th>
             <tr>
                 @foreach($boards as $board)
@@ -22,6 +23,7 @@
                         {{ $board->title }}</a>
                 </td>
                 <td>{{ $board->content }}</td>
+
             </tr>
             @endforeach
         </table>
