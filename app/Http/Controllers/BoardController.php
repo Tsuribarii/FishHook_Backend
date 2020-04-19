@@ -18,12 +18,16 @@ class BoardController extends Controller
     {
         //모델과 컨트롤러 연결
         $this->board_model = new Board();
+
+        //사용자 권한 auth 미들웨어
+        $this->middleware('auth');
     }
 
     public function index()
     {
         //게시글 리스트 
         $board =  Board::all();
+
         // $user = User::where('id',$board->user_id)->first();
         return view('list')->with('boards', $board);
     }
@@ -72,6 +76,7 @@ class BoardController extends Controller
         //board테이블의 id컬럼에서 $id의 정보를 가져옴
         $board = Board::where('id',$id)->first();
         $user = User::where('id',$board->user_id)->first();
+
         return view('show')->with('board',$board)->with('user',$user);
     }
 
@@ -97,7 +102,6 @@ class BoardController extends Controller
     public function update(Request $request, $id)
     {
         Board::where('id',$id)->update([
-            // 'user_id'=>$request->user_id,
             'title'=>$request->title,
             'species'=>$request->species,
             'tide'=>$request->tide,

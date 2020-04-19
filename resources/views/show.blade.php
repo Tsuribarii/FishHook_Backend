@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title></title>
 </head>
+
 <body>
     <h1>글 상세페이지</h1>
     <div>
@@ -17,14 +19,15 @@
     <div>
         <p>내용: {{ $board->content }}</p>
     </div>
- 
+
     <div>
-        @can('update-post',$user)
-    <button onclick="window.location='{{ url('/edit') }}/{{ $board->id }}'">수정</button>
-    <button onclick="window.location='{{ url('/delete') }}/{{ $board->id }}'">삭제</button>
-        @endcan
-    <button onclick="window.location='{{ route('list') }}'">목록으로</button>
+        @if(Auth::user() == $user)
+        <button onclick="window.location='{{ url('/edit') }}/{{ $board->id }}'">수정</button>
+        <button onclick="window.location='{{ url('/delete') }}/{{ $board->id }}'">삭제</button>
+        @endif
+        <button onclick="window.location='{{ route('list') }}'">목록으로</button>
     </div>
- 
+
 </body>
+
 </html>
