@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Board extends Model
 {
     protected $fillable = [
-        'id', 'user_id', 'title','sqecies','tide','bait','location','content','hits','sympathy','created_at','updated_at'
+        'id', 'user_id', 'title','species','tide','bait','location','content','hits','sympathy','created_at','updated_at'
     ];
 
     // 하나의 글은 하나의 회원을 가질 수 있다
