@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Board;
 use App\User;
 
+
 class BoardController extends Controller
 {
     /**
@@ -50,7 +51,7 @@ class BoardController extends Controller
      */
     public function store(Request $request)
     {
-        Board::insert([
+        Board::create([
             'user_id'=> \Auth::id(),
             'title'=>$request->title,
             'species'=>$request->species,
