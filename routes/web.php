@@ -35,4 +35,10 @@ Route::post('/update/{id}', 'BoardController@update');
 
 Route::get('/delete/{id}', 'BoardController@destroy');
 
+Route::get('/myabout/{id}', 'MypageController@show');
+
+Route::get('/myedit/{id}', 'MypageController@edit');
+
+Route::post('/update/{id}', 'MypageController@updateProfile');
+
 // Route::resource('boards', 'BoardController');
