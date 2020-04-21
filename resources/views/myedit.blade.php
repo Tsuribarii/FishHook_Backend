@@ -7,12 +7,12 @@
 
 <body>
     <h1>마이페이지 수정</h1>
-    <form action="/update/ {{ $user->id }}" method="POST" role="form" enctype="multipart/form-data">
+    <form method="POST" action="/myupdate/ {{ $user->id }}" role="form" enctype="multipart/form-data">
         @csrf
         <div>
-            <label for="profile_image">Profile Image</label>
+            <label for="profile_photo">Profile Image</label>
             <div>
-                <input id="profile_image" type="file" class="form-control" name="profile_image">
+                <input id="profile_photo" type="file" class="form-control" name="profile_photo">
                 @if (auth()->user()->image)
                 <code>{{ auth()->user()->image }}</code>
                 @endif
