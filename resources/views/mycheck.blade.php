@@ -6,11 +6,8 @@
 </head>
 
 <body>
-    <h1>마이페이지about</h1>
-        @if (auth()->user()->image)
-        <img src="{{ asset(auth()->user()->image) }}" style="width: 40px; height: 40px;">
-        @endif
-        {{ Auth::user()->name }} <span class="caret"></span>
+    <h1>마이페이지check</h1>
+        
     <div>
         <p>이메일: {{ $user->email }}</p>
     </div>
