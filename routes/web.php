@@ -43,4 +43,10 @@ Route::post('/myupdate/{id}', 'MypageController@updateProfile');
 
 Route::post('/myupdate/{id}', 'MypageController@update');
 
+Route::get('/recreate/{id}', 'ShipController@create');
+
+Route::post('/reservation/{id}', 'ShipController@rentalStore');
+
+Route::get('/shipshow/{id}', 'ShipController@shipshow');
+
 // Route::resource('boards', 'BoardController');
