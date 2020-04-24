@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Ship;
 use App\ShipRental;
 
 class MypageController extends Controller
@@ -56,8 +57,9 @@ class MypageController extends Controller
     public function show($id)
     {
         $user = User::where('id',$id)->first();
+        $ship = Ship::where('id',$id)->first();
         $rental = ShipRental::where('id',$id)->first();
-        return view('myabout')->with('user',$user);
+        return view('mycheck')->with('user',$user)->with('ship',$ship)->with('rental',$rental);
     }
 
     /**
