@@ -24,7 +24,9 @@ class ShipController extends Controller
     public function shipshow($id)
     {
         $ship = Ship::where('id',$id)->first();
-        return view('shipshow')->with('ship',$ship);
+        return response()->json([
+            'ship'=>$ship,
+        ]);
     }
 
     public function rentalStore(Request $request)
@@ -35,7 +37,7 @@ class ShipController extends Controller
             'departure_date'=>$request->departure_date,
             'number_of_people'=>$request->number_of_people,
             ]);
-
+            
             return view('reshow');
     }
 }

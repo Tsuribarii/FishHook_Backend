@@ -21,7 +21,7 @@ class BoardController extends Controller
         $this->board_model = new Board();
 
         //사용자 권한 auth 미들웨어
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     public function index()
@@ -30,7 +30,9 @@ class BoardController extends Controller
         $board =  Board::all();
 
         // $user = User::where('id',$board->user_id)->first();
-        return view('list')->with('boards', $board);
+        return response()->json([
+            'boards'=>$board,
+        ]);
     }
 
     /**
@@ -40,7 +42,7 @@ class BoardController extends Controller
      */
     public function create()
     {
-        return view('create');
+        // return view('create');
     }
 
     /**
@@ -51,17 +53,28 @@ class BoardController extends Controller
      */
     public function store(Request $request)
     {
-        Board::create([
-            'user_id'=> \Auth::id(),
-            'title'=>$request->title,
-            'species'=>$request->species,
-            'tide'=>$request->tide,
-            'bait'=>$request->bait,
-            'location'=>$request->location,
-            'content'=>$request->content
-            ]);
+        $this->validate($request, [
+            'title' => 'required',
+            'species' => 'required',
+            'tide' => 'required',
+            'bait' => 'required',
+            'location' => 'required',
+            'content' => 'required',
+        ]);
 
-        return redirect(route('list'));
+        return Board::create([
+            'user_id'=>\Auth::id(),
+            'title' => $request['title'],
+            'species' => $request['species'],
+            'tide' => $request['tide'],
+            'bait' => $request['bait'],
+            'location' => $request['location'],
+            'content' => $request['content']
+         ]);
+
+         return response()->json([
+            'message' => '저장되었습니다.'
+           ]);
     }
 
     /**
@@ -78,7 +91,10 @@ class BoardController extends Controller
         $board = Board::where('id',$id)->first();
         $user = User::where('id',$board->user_id)->first();
 
-        return view('show')->with('board',$board)->with('user',$user);
+        return response()->json([
+            'user'=>$user,
+            'board'=>$board
+        ]);
     }
 
     /**
@@ -90,7 +106,9 @@ class BoardController extends Controller
     public function edit($id)
     {
         $board = Board::where('id',$id)->first();
-        return view('edit')->with('board',$board);
+        return response()->json([
+            'board'=>$board
+        ]);
     }
 
     /**
@@ -102,16 +120,22 @@ class BoardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Board::where('id',$id)->update([
-            'title'=>$request->title,
-            'species'=>$request->species,
-            'tide'=>$request->tide,
-            'bait'=>$request->bait,
-            'location'=>$request->location,
-            'content'=>$request->content
-            ]);
-        // insert 나 delete update 했을 경우 view로 연결할 때는 redirect
-        return redirect('show/' .$id);
+        $this->validate($request, [
+            'title' => 'required',
+            'species' => 'required',
+            'tide' => 'required',
+            'bait' => 'required',
+            'location' => 'required',
+            'content' => 'required',
+        ]);
+
+        $board = Board::findOrFail($id);
+
+        $board->update($request->all());
+
+        return response()->json([
+            'message' => '업데이트 되었습니다.'
+           ]);
     }
 
     /**
@@ -122,7 +146,10 @@ class BoardController extends Controller
      */
     public function destroy($id)
     {
-        Board::where('id',$id)->delete();
-        return redirect('list');
+        $board = Board::findOrFail($id);
+        $board->delete();
+        return response()->json([
+            'message' => '삭제 되었습니다.'
+           ]);
     }
 }

@@ -18,7 +18,7 @@ class MypageController extends Controller
     {
         //모델과 컨트롤러 연결
         $this->user_model = new User();
-        $this->middleware('auth');
+        // $this->middleware('auth');
 
     }
 
@@ -45,7 +45,12 @@ class MypageController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $this->validate($request, [
+            'password' => 'required',
+            'email' => 'required',
+            'nickname' => 'required',
+            'phone_number' => 'required',
+        ]);
     }
 
     /**
@@ -57,7 +62,9 @@ class MypageController extends Controller
     public function show($id)
     {
         $user = User::where('id',$id)->first();
-        return view('myabout')->with('user',$user);
+        return response()->json([
+            'user'=>$user,
+        ]);
     }
 
     public function checkshow($id)
@@ -65,10 +72,14 @@ class MypageController extends Controller
         $user = User::where('id',$id)->first();
         $ship = Ship::where('id',$id)->first();
         $rental = ShipRental::where('id',$id)->first();
-        return view('mycheck')->with('user',$user)->with('ship',$ship)->with('rental',$rental);
+        return response()->json([
+            'user'=>$user,
+            'ship'=>$ship,
+            'rental'=>$rental
+        ]);
     }
 
-    /**
+    /**edit
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -77,7 +88,10 @@ class MypageController extends Controller
     public function edit($id)
     {
         $user = User::where('id',$id)->first();
-        return view('myedit')->with('user',$user);
+        return response()->json([
+            'user'=>$user,
+        ]);
+        
     }
 
     /**
@@ -91,15 +105,23 @@ class MypageController extends Controller
     {
         //프로필 사진
         $request->file('profile_photo')->store('images', 'public');
+        
+        $this->validate($request, [
+            'password' => 'required',
+            'email' => 'required',
+            'nickname' => 'required',
+            'phone_number' => 'required',
+        ]);
 
-        User::where('id',$id)->update([
-            'profile_photo'=>$request->profile_photo,
-            'password'=>$request->password,
-            'email'=>$request->email,
-            'nickname'=>$request->nickname,
-            ]);
+        $user = User::findOrFail($id);
 
-        return redirect('myabout/' .$id);
+        $user->update($request->all());
+
+        return response()->json([
+            'message' => '업데이트 되었습니다.'
+           ]);
+
+        // return redirect('myabout/' .$id);
     }
 
     /**
