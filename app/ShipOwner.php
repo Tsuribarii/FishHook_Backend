@@ -13,7 +13,7 @@ class ShipOwner extends Model
     }
 
     // 하나의 업자는 여러 배를 가질 수 있다
-    public function ship()
+    public function ships()
     {
         return $this->hasMany('App\ship');
     }
