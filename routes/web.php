@@ -45,7 +45,7 @@ Route::post('/myupdate/{id}', 'MypageController@updateProfile');
 
 Route::post('/myupdate/{id}', 'MypageController@update');
 
-Route::get('/mycheck/{id}', 'MypageController@show');
+Route::get('/mycheck/{id}', 'MypageController@checkshow');
 
 //예약
 Route::get('/recreate/{id}', 'ShipController@create');

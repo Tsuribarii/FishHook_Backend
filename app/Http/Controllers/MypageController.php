@@ -57,6 +57,12 @@ class MypageController extends Controller
     public function show($id)
     {
         $user = User::where('id',$id)->first();
+        return view('myabout')->with('user',$user);
+    }
+
+    public function checkshow($id)
+    {
+        $user = User::where('id',$id)->first();
         $ship = Ship::where('id',$id)->first();
         $rental = ShipRental::where('id',$id)->first();
         return view('mycheck')->with('user',$user)->with('ship',$ship)->with('rental',$rental);
@@ -88,6 +94,7 @@ class MypageController extends Controller
 
         User::where('id',$id)->update([
             'profile_photo'=>$request->profile_photo,
+            'password'=>$request->password,
             'email'=>$request->email,
             'nickname'=>$request->nickname,
             ]);
