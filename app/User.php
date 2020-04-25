@@ -18,7 +18,7 @@ class User extends Authenticatable
 
     # request->all()함수를 사용했을 시 할당할 데이터 (대량할당), 이 이외의 칼럼값은 가져오지 않음.
     protected $fillable = [
-        'name', 'email', 'password','nickname','roles','phone_number','profile_photo'
+        'id', 'email', 'password','nickname','roles','phone_number','profile_photo','created_at','updated_at'
     ];
 
     public function getImageAttribute()
@@ -73,6 +73,12 @@ class User extends Authenticatable
     public function rakings()
     {
         return $this->hasMany('App\Ranking');
+    }
+
+    // 하나의 회원은 여러 영업 장소을 가질 수 있다
+    public function fishing_places()
+    {
+        return $this->hasMany('App\FishingPlace');
     }
 
 
