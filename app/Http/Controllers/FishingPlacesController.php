@@ -59,7 +59,7 @@ class FishingPlacesController extends Controller
             );
             array_push($json, $kk);
         }
-        // 모델 가져오기
+        // 모델 가지고 오기
         $fishing = new FishingPlace();
         // 키밸류로 만든 array를 돌려서 데이터베이스에 삽입
         foreach ($json as $index => $value) {
