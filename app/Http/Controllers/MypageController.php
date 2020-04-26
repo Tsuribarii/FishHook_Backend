@@ -104,7 +104,7 @@ class MypageController extends Controller
     public function update(Request $request, $id)
     {
         //프로필 사진
-        $request->file('profile_photo')->store('images', 'public');
+        // $request->file('profile_photo')->store('images', 'public');
         
         $this->validate($request, [
             'password' => 'required',
