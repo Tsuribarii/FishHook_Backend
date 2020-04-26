@@ -15,20 +15,21 @@ class CreateFishingPlacesTable extends Migration
     {
         Schema::create('fishing_places', function (Blueprint $table) {
             $table->bigIncrements('id')->comment("낚시터 번호");
-            
-            $table->unsignedBigInteger('user_id')->comment("대표자 번호");
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->string('phone_number')->comment("대표자 휴대폰번호");
+            $table->foreign('phone_number')->references('phone_number')->on('users')->onDelete('cascade');
             
             $table->string('place_name')->comment("낚시터 상호명");
             $table->string('location')->comment("사업장 주소");
             $table->string('fishing_type')->comment("낚시 업종");
-            $table->integer('people')->comment("수용 인원");
+            $table->string('people')->comment("수용 인원");
             $table->string('available_time')->comment("이용시간");
             $table->string('homepage')->comment("홈페이지");
-            $table->string('place_photo')->comment("업장 사진");
-            $table->string('pay_information')->comment("결제 정보");
+            $table->string('place_photo')->default('')->comment("업장 사진");
             $table->string('main_fish_species')->comment("주요 어종");
-            $table->string('main_fish_image')->comment("주요 어종 이미지");
+            $table->text('main_fish_image')->comment("주요 어종 이미지");
+            $table->string('price')->comment("낚시터 가격");
+            
             
             $table->timestamps();
         });

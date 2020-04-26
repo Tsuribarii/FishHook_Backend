@@ -67,3 +67,6 @@ Route::get('/recreate/{id}', 'ShipController@create');
 Route::post('/reservation/{id}', 'ShipController@rentalStore');
 
 Route::get('/shipshow/{id}', 'ShipController@shipshow');
+
+//낚시터정보
+Route::get('/index', 'FishingPlacesController@index');
