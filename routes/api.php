@@ -21,12 +21,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/home', 'HomeController@index')->name('home');
 
 //인증
-
-Auth::routes();
-
 Route::post('auth/register', 'AuthController@register');
 
-Route::post( 'auth/login', 'AuthController@login'); 
+Route::post('auth/login', 'AuthController@login'); 
 
 Route::group([ 'middleware'=> 'jwt.auth'], function () { 
     Route::get( 'auth/user', 'AuthController@user'); 

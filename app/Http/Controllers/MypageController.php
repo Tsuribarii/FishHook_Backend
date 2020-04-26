@@ -45,12 +45,7 @@ class MypageController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'password' => 'required',
-            'email' => 'required',
-            'nickname' => 'required',
-            'phone_number' => 'required',
-        ]);
+        //
     }
 
     /**
