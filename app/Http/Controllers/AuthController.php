@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use App\User;
 
 class AuthController extends Controller
 {
-    public function register(RegisterFormRequest $request)
+    public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|unique:users',
@@ -48,6 +50,7 @@ class AuthController extends Controller
                     'msg' => 'Invalid Credentials.'
                 ], 400);
         }
+        
         return response([
                 'status' => 'success'
             ])
