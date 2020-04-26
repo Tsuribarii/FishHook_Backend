@@ -34,7 +34,7 @@ class AuthController extends Controller
         $user->phone_number = $request->phone_number;
         $user->save();
 
-        return response([
+        return response()->json([
             'status' => 'success',
             'data' => $user
             ], 200);
@@ -44,14 +44,14 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
         if ( ! $token = JWTAuth::attempt($credentials)) {
-                return response([
+                return response()->json([
                     'status' => 'error',
                     'error' => 'invalid.credentials',
                     'msg' => 'Invalid Credentials.'
                 ], 400);
         }
         
-        return response([
+        return response()->json([
                 'status' => 'success'
             ])
             ->header('Authorization', $token);
@@ -61,7 +61,7 @@ class AuthController extends Controller
     public function user(Request $request)
     {
         $user = User::find(Auth::user()->id);
-        return response([
+        return response()->json([
                 'status' => 'success',
                 'data' => $user
             ]);
@@ -69,7 +69,7 @@ class AuthController extends Controller
 
     public function refresh()
     {
-        return response([
+        return response()->json([
                 'status' => 'success'
             ]);
     }
@@ -77,7 +77,7 @@ class AuthController extends Controller
     public function logout()
     {
         JWTAuth::invalidate();
-        return response([
+        return response()->json([
                 'status' => 'success',
                 'msg' => 'Logged out Successfully.'
             ], 200);
