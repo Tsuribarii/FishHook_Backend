@@ -100,11 +100,13 @@ class MypageController extends Controller
     {
         //프로필 사진
         // $request->file('profile_photo')->store('images', 'public');
+
+        $imageName = time().'.'.$request->image->getClientOriginalExtension();
+        $request->image->move(public_path('images'), $imageName);
         
         $this->validate($request, [
             'password' => 'required',
-            'email' => 'required',
-            'nickname' => 'required',
+            'name' => 'required',
             'phone_number' => 'required',
         ]);
 

@@ -24,7 +24,7 @@ class CreateShipsTable extends Migration
             $table->integer('cost')->comment("비용");
 
             $table->string('departure_time')->comment("출항시간");
-            $table->string('arrivel_time')->comment("입항시간");
+            $table->string('arrival_time')->comment("입항시간");
 
             $table->timestamps();
         });
