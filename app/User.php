@@ -19,7 +19,7 @@ class User extends Authenticatable implements JWTsubject
 
     # request->all()함수를 사용했을 시 할당할 데이터 (대량할당), 이 이외의 칼럼값은 가져오지 않음.
     protected $fillable = [
-        'id', 'email', 'password','nickname','roles','phone_number','profile_photo','created_at','updated_at'
+        'id', 'email', 'password','name','roles','phone_number','profile_photo','created_at','updated_at'
     ];
 
     public function getJWTIdentifier()
