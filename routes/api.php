@@ -65,5 +65,9 @@ Route::post('/reservation/{id}', 'ShipController@rentalStore');
 
 Route::get('/shipshow/{id}', 'ShipController@shipshow');
 
+//날씨정보
+Route::get('/weather', 'WeatherInformationsController@weather');
+//물때정보
+Route::get('/tide', 'TideInformationsController@tide');
 //낚시터정보
-Route::get('/index', 'FishingPlacesController@index');
+Route::get('/fishing', 'FishingPlacesController@fishing');

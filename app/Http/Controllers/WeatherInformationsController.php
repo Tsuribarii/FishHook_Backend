@@ -12,7 +12,7 @@ class WeatherInformationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function weather()
     {
         // $path = 'C:\Users\PC\jekim\test.json';
         // $datas = json_decode(file_get_contents($path), true);
@@ -21,7 +21,7 @@ class WeatherInformationsController extends Controller
 
     }
     //json -> database 저장함수  
-    public function weather()
+    public function weather_json()
     {
         //json 가져오기
         $path = 'C:\Users\PC\jekim\FishHook_Weather\weather.json';

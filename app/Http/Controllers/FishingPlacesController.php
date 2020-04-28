@@ -13,7 +13,7 @@ class FishingPlacesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function fishing()
     {
         //디비값 가져오기
         $all_data = DB::table('fishing_places')->get();
@@ -33,7 +33,7 @@ class FishingPlacesController extends Controller
 
         return $array;
     }
-    public function fishing()
+    public function fishing_json()
     {
         //json 가져오기
         $path = 'C:\Users\PC\jekim\FishHook_FishingSpot\FishingSpot.json';

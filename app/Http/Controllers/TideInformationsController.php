@@ -12,11 +12,11 @@ class TideInformationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function tide()
     {
         return TideInformation::all();
     }
-    public function tide()
+    public function tide_json()
     {
         //json 가져오기
         $path = 'C:\Users\PC\jekim\FishHook_HighTide\HighTide.json';
