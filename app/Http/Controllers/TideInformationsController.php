@@ -27,7 +27,7 @@ class TideInformationsController extends Controller
             $kk = array(
                 'location'   => $datas[$i][0],
                 'date' => $datas[$i][1],
-                'high_tide'  => $datas[$i][2]
+                'hide_tide'  => $datas[$i][2]
             );
             array_push($json, $kk);
         }
@@ -37,7 +37,7 @@ class TideInformationsController extends Controller
         foreach ($json as $res) {
             $tide->location = $res['location'];
             $tide->date = $res['date'];
-            $tide->high_tide = $res['high_tide'];
+            $tide->hide_tide = $res['hide_tide'];
             $tide->save();
             $tide = new TideInformation();
         }
