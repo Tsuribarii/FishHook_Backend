@@ -22,6 +22,15 @@ class User extends Authenticatable implements JWTsubject
         'id', 'email', 'password','name','roles','phone_number','profile_photo','created_at','updated_at'
     ];
 
+    public function getProfilepictureFilenameAttribute()
+    {
+        if (! $this->attributes['profile_photo']) {
+            return '/images/default.jpg';
+        }
+
+        return $this->attributes['profile_photo'];
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
