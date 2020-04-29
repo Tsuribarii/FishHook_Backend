@@ -39,7 +39,7 @@ Route::get('/myabout/{id}', 'MypageController@show');
 
 Route::get('/myedit/{id}', 'MypageController@edit');
 
-Route::post('/myupdate/{id}', 'MypageController@update');
+Route::put('/myupdate/{id}', 'MypageController@update');
 
 Route::get('/mycheck/{id}', 'MypageController@checkshow');
 

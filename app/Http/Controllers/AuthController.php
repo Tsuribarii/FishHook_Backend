@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\User;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
@@ -16,8 +17,20 @@ class AuthController extends Controller
             'password' => 'required|string|min:6|max:10',
             'name' => 'required|string|unique:users',
             'roles' => 'required|int|',
-            'phone_number' => 'required|string|'
+            'phone_number' => 'required|string|',
+            // 'profile_photo' => 'required'
         ]);
+
+        $user = new User();
+        if ($request->hasFile('profile_photo')) {
+            $image = $request->file('profile_photo');
+            $name = $image->getClientOriginalName();
+            $destinationPath = public_path('/images');
+            $imagePath = $destinationPath. "/".  $name;
+            $image->move($destinationPath, $name);
+            $user->profile_photo = $name;
+            // $user->profile_photo = $request->profile_photo;
+          }
 
         if ($validator->fails()) {
             return response()->json([
@@ -26,12 +39,12 @@ class AuthController extends Controller
             ], 200);
         }
 
-        $user = new User;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->name = $request->name;
         $user->roles = $request->roles;
         $user->phone_number = $request->phone_number;
+        
         $user->save();
 
         return response()->json([

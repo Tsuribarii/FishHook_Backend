@@ -97,28 +97,30 @@ class MypageController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //프로필 사진
-        // $request->file('profile_photo')->store('images', 'public');
-
-        $imageName = time().'.'.$request->image->getClientOriginalExtension();
-        $request->image->move(public_path('images'), $imageName);
-        
+    { 
         $this->validate($request, [
             'password' => 'required',
-            'name' => 'required',
             'phone_number' => 'required',
         ]);
-
+        
         $user = User::findOrFail($id);
+      
+          if ($request->hasFile('profile_photo')) {
+              $image = $request->file('profile_photo');
+              $name = $image->getClientOriginalName();
+              $destinationPath = public_path('/images');
+              $imagePath = $destinationPath. "/".  $name;
+              $image->move($destinationPath, $name);
+              $user->profile_photo = $name;
+            }
+            
+            $user->update($request->all());
+            // $user->save();
+            
 
-        $user->update($request->all());
-
-        return response()->json([
+            return response()->json([
             'message' => '업데이트 되었습니다.'
            ]);
-
-        // return redirect('myabout/' .$id);
     }
 
     /**

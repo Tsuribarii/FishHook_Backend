@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('name')->comment("이름");
             $table->integer('roles')->default(1)->comment("역할");
             $table->integer('phone_number')->nullable()->comment("휴대전화번호");
-            $table->string('profile_photo')->nullable()->comment("프로필사진");
+            $table->string('profile_photo')->default('default.jpg')->comment("프로필사진");
             // $table->timestamp('email_verified_at')->nullable();
                    
             $table->rememberToken();
