@@ -41,6 +41,8 @@ Route::get('/myedit/{id}', 'MypageController@edit');
 
 Route::put('/myupdate/{id}', 'MypageController@update');
 
+Route::delete('/mydelete/{id}', 'MypageController@destroy');
+
 Route::get('/mycheck/{id}', 'MypageController@checkshow');
 
 //커뮤니티

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\User;
 use App\Ship;
 use App\ShipRental;
@@ -98,6 +99,7 @@ class MypageController extends Controller
      */
     public function update(Request $request, $id)
     { 
+        // \Log::debug($request->all());
         $this->validate($request, [
             'password' => 'required',
             'phone_number' => 'required',
@@ -117,7 +119,6 @@ class MypageController extends Controller
             $user->update($request->all());
             // $user->save();
             
-
             return response()->json([
             'message' => '업데이트 되었습니다.'
            ]);
@@ -129,7 +130,7 @@ class MypageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
     }
