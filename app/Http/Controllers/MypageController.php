@@ -132,16 +132,6 @@ class MypageController extends Controller
      */
     public function destroy(Request $request)
     {
-        $profile_photo = $request->profile_photo;
-        User::where([
-            'profile_photo'=>$profile_photo,
-        ])->delete();
-
-        return response()->json([
-            'message' => '삭제 되었습니다.'
-           ]);
-        // $file= $image->user_image;
-        // $filename = public_path().'/images/'.$image;
-        // File::delete($filename);
+        //
     }
 }
