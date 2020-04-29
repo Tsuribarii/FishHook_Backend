@@ -29,7 +29,6 @@ class AuthController extends Controller
             $imagePath = $destinationPath. "/".  $name;
             $image->move($destinationPath, $name);
             $user->profile_photo = $name;
-            // $user->profile_photo = $request->profile_photo;
           }
 
         if ($validator->fails()) {
