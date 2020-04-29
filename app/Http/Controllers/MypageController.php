@@ -99,7 +99,7 @@ class MypageController extends Controller
      */
     public function update(Request $request, $id)
     { 
-        \Log::debug($request->all());
+        // \Log::debug($request->all());
         $this->validate($request, [
             'password' => 'required',
             'phone_number' => 'required',
