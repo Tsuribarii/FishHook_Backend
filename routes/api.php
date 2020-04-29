@@ -64,3 +64,12 @@ Route::get('/recreate/{id}', 'ShipController@create');
 Route::post('/reservation/{id}', 'ShipController@rentalStore');
 
 Route::get('/shipshow/{id}', 'ShipController@shipshow');
+
+//날씨 정보
+Route::get('/weather', 'WeatherInformationsController@weather');
+
+//물때 정보
+Route::get('/tide', 'TideInformationsController@tide');
+
+//낚시터 정보
+Route::get('/fishing', 'FishingPlacesController@fishing');
