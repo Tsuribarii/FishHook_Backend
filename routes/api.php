@@ -39,7 +39,7 @@ Route::get('/myabout/{id}', 'MypageController@show');
 
 Route::get('/myedit/{id}', 'MypageController@edit');
 
-Route::put('/myupdate/{id}', 'MypageController@update');
+Route::post('/myupdate/{id}', 'MypageController@update');
 
 Route::delete('/mydelete/{id}', 'MypageController@destroy');
 
