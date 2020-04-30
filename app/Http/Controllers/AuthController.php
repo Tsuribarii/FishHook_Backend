@@ -62,7 +62,7 @@ class AuthController extends Controller
                     'msg' => 'Invalid Credentials.'
                 ], 400);
         }
-        
+        \Log::debug($token);
         return response()->json([
                 'status' => 'success'
             ])
