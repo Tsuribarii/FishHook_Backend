@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use App\User;
 use App\Ship;
 use App\ShipRental;
@@ -106,8 +107,8 @@ class MypageController extends Controller
         ]);
         
         $user = User::findOrFail($id);
-      
-          if ($request->hasFile('profile_photo')) {
+        $currentphoto = $user->profile_photo;
+          if ($request->photo != $currentphoto) {
               $image = $request->file('profile_photo');
               $name = $image->getClientOriginalName();
               $destinationPath = public_path('/images');
@@ -130,8 +131,14 @@ class MypageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id)
+            // ->where('profile_photo')
+            ->update(['profile_photo'=>'default.jpg']);
+            
+            return response()->json([
+                'message' => '삭제 되었습니다.'
+               ]);
     }
 }
