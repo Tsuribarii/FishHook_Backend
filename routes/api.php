@@ -30,7 +30,7 @@ Route::group([ 'middleware'=> 'jwt.auth'], function () {
     Route::get( 'auth/user', 'AuthController@user'); 
     Route::get('auth/logout', 'AuthController@logout');
 
-//마이페이지
+//마이페이지 
 Route::get('/myabout', 'MypageController@show');
 Route::get('/myedit', 'MypageController@edit');
 Route::post('/myupdate', 'MypageController@update');
