@@ -16,6 +16,17 @@ class ShipController extends Controller
         $this->middleware('auth');
     }
 
+    public function ownerStore(Request $request)
+    {
+        ShipRental::create([
+            'location' => $request->location,
+            'business_time' => $request->business_time,
+            'homepage' => $request->homepage
+            ]);
+            
+            return view('reshow');
+    }
+    
     public function create()
     {
         return view('recreate');

@@ -25,23 +25,22 @@ Route::post('auth/register', 'AuthController@register');
 
 Route::post('auth/login', 'AuthController@login'); 
 
+//인증된 사용자면 라우트 접근 가능
 Route::group([ 'middleware'=> 'jwt.auth'], function () { 
     Route::get( 'auth/user', 'AuthController@user'); 
     Route::get('auth/logout', 'AuthController@logout');
+
+//마이페이지
+Route::get('/myabout', 'MypageController@show');
+Route::get('/myedit', 'MypageController@edit');
+Route::post('/myupdate', 'MypageController@update');
+Route::get('/mycheck', 'MypageController@checkshow');
+
 }); 
 
 Route::group([ 'middleware'=> 'jwt.refresh'], function () { 
     Route::get( 'auth/refresh', 'AuthController@refresh'); 
 });
-
-//마이페이지
-Route::get('/myabout/{id}', 'MypageController@show');
-
-Route::get('/myedit/{id}', 'MypageController@edit');
-
-Route::put('/myupdate/{id}', 'MypageController@update');
-
-Route::get('/mycheck/{id}', 'MypageController@checkshow');
 
 //커뮤니티
 Route::get('/list', 'BoardController@index')->name('list');

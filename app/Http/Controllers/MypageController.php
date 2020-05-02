@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\User;
 use App\Ship;
+use Auth;
 use App\ShipRental;
 
 class MypageController extends Controller
@@ -18,7 +20,7 @@ class MypageController extends Controller
     {
         //모델과 컨트롤러 연결
         $this->user_model = new User();
-        // $this->middleware('auth');
+        // $this->middleware('jwt.auth');
 
     }
 
@@ -54,22 +56,23 @@ class MypageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        $user = User::where('id',$id)->first();
+        $user = User::where('id',1)->first();
         return response()->json([
             'user'=>$user,
         ]);
     }
 
-    public function checkshow($id)
+    public function checkshow()
     {
-        $user = User::where('id',$id)->first();
-        $ship = Ship::where('id',$id)->first();
-        $rental = ShipRental::where('id',$id)->first();
-        return response()->json([
+        $user = User::where('id',1)->first();
+        $rental = DB::table('ship_rentals')
+            ->join('users', 'users.id', '=', 'ship_rentals.user_id')->get();
+        
+            return response()->json([
             'user'=>$user,
-            'ship'=>$ship,
+            // 'ship'=>$ship,
             'rental'=>$rental
         ]);
     }
@@ -80,9 +83,9 @@ class MypageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        $user = User::where('id',$id)->first();
+        $user = User::where('id',1)->first();
         return response()->json([
             'user'=>$user,
         ]);
@@ -96,7 +99,7 @@ class MypageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     { 
         $this->validate($request, [
             'password' => 'required',
@@ -129,8 +132,14 @@ class MypageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        //
+        $user = User::where('id',1)->first()
+            // ->where('profile_photo')
+            ->update(['profile_photo'=>'default.jpg']);
+            
+        return response()->json([
+            'message' => '삭제 되었습니다.'
+            ]);
     }
 }
