@@ -64,10 +64,17 @@ class AuthController extends Controller
                 ], 400);
         }
         
+        // return response()->json([
+        //         'status' => 'success'
+        //     ])
+        //     ->header('Authorization', $token);
+        
         return response()->json([
-                'status' => 'success'
-            ])
-            ->header('Authorization', $token);
+            'headers' => [
+                'Authorization' => 'Bearer '.$token,
+                'Accept' => 'application/json',
+            ],
+        ]);
     }
 
     //토큰이 있는지 확인하면서 리프레쉬
