@@ -120,7 +120,6 @@ class MypageController extends Controller
             $user->update($request->all());
             // $user->save();
             
-
             return response()->json([
             'message' => '업데이트 되었습니다.'
            ]);
