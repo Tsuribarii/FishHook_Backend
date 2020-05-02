@@ -23,8 +23,9 @@ class ShipController extends Controller
             'business_time' => $request->business_time,
             'homepage' => $request->homepage
             ]);
-            
-            return view('reshow');
+            return response()->json([
+                'status' => 'success'
+                ], 200);
     }
     
     public function create()
@@ -48,7 +49,8 @@ class ShipController extends Controller
             'departure_date'=>$request->departure_date,
             'number_of_people'=>$request->number_of_people,
             ]);
-            
-            return view('reshow');
+            return response()->json([
+                'status' => 'success'
+                ], 200);
     }
 }

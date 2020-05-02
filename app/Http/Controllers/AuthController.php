@@ -22,15 +22,15 @@ class AuthController extends Controller
         ]);
 
         $user = new User();
-        if ($request->hasFile('profile_photo')) {
-            $image = $request->file('profile_photo');
-            $name = $image->getClientOriginalName();
-            $destinationPath = public_path('/images');
-            $imagePath = $destinationPath. "/".  $name;
-            $image->move($destinationPath, $name);
-            $user->profile_photo = $name;
-            // $user->profile_photo = $request->profile_photo;
-          }
+        // if ($request->hasFile('profile_photo')) {
+        //     $image = $request->file('profile_photo');
+        //     $name = $image->getClientOriginalName();
+        //     $destinationPath = public_path('/images');
+        //     $imagePath = $destinationPath. "/".  $name;
+        //     $image->move($destinationPath, $name);
+        //     $user->profile_photo = $name;
+        //     $user->profile_photo = $request->profile_photo;
+        //   }
 
         if ($validator->fails()) {
             return response()->json([
