@@ -69,12 +69,7 @@ class AuthController extends Controller
         //     ])
         //     ->header('Authorization', $token);
         
-        return response()->json([
-            'headers' => [
-                'Authorization' => 'Bearer '.$token,
-                'Accept' => 'application/json',
-            ],
-        ]);
+        return response()->json( compact('token') );
     }
 
     //토큰이 있는지 확인하면서 리프레쉬
