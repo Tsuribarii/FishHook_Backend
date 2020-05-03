@@ -36,15 +36,17 @@ Route::get('/myedit', 'MypageController@edit');
 Route::post('/myupdate', 'MypageController@update');
 Route::get('/mycheck', 'MypageController@checkshow');
 
+//예약
+Route::post('/ownerstore', 'ShipController@ownerstore');
+Route::post('/shipstore', 'ShipController@shipstore');
+Route::post('/rentalstore', 'ShipController@rentalstore');
 }); 
 
 Route::group([ 'middleware'=> 'jwt.refresh'], function () { 
     Route::get( 'auth/refresh', 'AuthController@refresh'); 
 });
 
-//예약
-Route::post('/ownerstore', 'ShipController@ownerstore');
-Route::post('/shipstore', 'ShipController@shipstore');
+
 
 //커뮤니티
 Route::get('/list', 'BoardController@index')->name('list');
