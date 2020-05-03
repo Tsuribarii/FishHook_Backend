@@ -79,4 +79,4 @@ Route::get('/fishing', 'FishingPlacesController@fishing');
 
 //랭킹 정보
 Route::get('/rank', 'RankController@rank');
-Route::get('/rank/delete/{id}', 'RankController@destroy');
+Route::delete('/rank/delete/{id}', 'RankController@destroy');
