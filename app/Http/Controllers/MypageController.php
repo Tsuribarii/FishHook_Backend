@@ -20,7 +20,7 @@ class MypageController extends Controller
     {
         //모델과 컨트롤러 연결
         $this->user_model = new User();
-        $this->middleware('jwt.auth');
+        // $this->middleware('jwt.auth');
 
     }
 
@@ -56,9 +56,11 @@ class MypageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show()
     {
         $user = Auth::user();
+        // $user = Auth::find($id);
+        // $user = User::where('id',$id)->first();
         return response()->json([
             'user'=>$user,
         ]);
@@ -71,7 +73,10 @@ class MypageController extends Controller
         //     ->join('users', 'ship_rentals.user_id','=','users.id', )->get();
         
             return response()->json([
-            'user'=>$user,
+            'user'=>$user
+            
+            
+            ,
             // 'ship'=>$ship,
             'rental'=>ShipRental::where('user_id', Auth::id())->get()
         ]);
