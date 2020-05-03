@@ -126,8 +126,8 @@ class MypageController extends Controller
             // $user->save();
             
             return response()->json([
-            'message' => '업데이트 되었습니다.'
-           ]);
+                'status' => 'success'
+                ], 200);
     }
 
     /**
@@ -143,7 +143,7 @@ class MypageController extends Controller
             ->update(['profile_photo'=>'default.jpg']);
             
         return response()->json([
-            'message' => '삭제 되었습니다.'
-            ]);
+            'status' => 'success'
+            ], 200);
     }
 }
