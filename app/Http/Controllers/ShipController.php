@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 use App\User;
 use App\ShipRental;
+use App\ShipOwner;
 use App\Ship;
 
 class ShipController extends Controller
@@ -13,24 +15,35 @@ class ShipController extends Controller
     {
         //모델과 컨트롤러 연결
         $this->user_model = new User();
-        $this->middleware('auth');
+        // $this->middleware('auth.jwt');
     }
 
     public function ownerStore(Request $request)
     {
-        ShipRental::create([
-            'location' => $request->location,
-            'business_time' => $request->business_time,
-            'homepage' => $request->homepage
+        // \Log::debug($request);
+        $this->validate($request, [
+            'location' => 'required',
+            'business_time' => 'required',
+            'homepage' => 'required',
+        ]);
+
+        $shipowner = new ShipOwner([
+            'user_id'=>Auth::user()->id,
+            'location' => $request['location'],
+            'business_time' => $request['business_time'],
+            'homepage' => $request['homepage']
             ]);
+
+        $shipowner->save();
+            
             return response()->json([
-                'status' => 'success'
-                ], 200);
+                'status' => 'success',
+            ]);
     }
     
     public function create()
     {
-        return view('recreate');
+        //
     }
 
     public function shipshow($id)
@@ -41,16 +54,28 @@ class ShipController extends Controller
         ]);
     }
 
-    public function rentalStore(Request $request)
+    public function shipStore(Request $request)
     {
-        ShipRental::create([
-            'user_id'=> \Auth::id(),
-            'ship_id'=>$request->ship_id,
-            'departure_date'=>$request->departure_date,
-            'number_of_people'=>$request->number_of_people,
+        \Log::debug($request);
+        $this->validate($request, [
+            'people' => 'required',
+            'cost' => 'required',
+            'departure_time' => 'required',
+            'arrival_time' => 'required',
+        ]);
+
+        $ship = new Ship([
+            'owner_id'=>Auth::user()->id,
+            'people'=>$request['people'],
+            'cost'=>$request['cost'],
+            'departure_time'=>$request['departure_time'],
+            'arrival_time'=>$request['arrival_time'],
             ]);
-            return response()->json([
-                'status' => 'success'
-                ], 200);
+
+        $ship->save();
+
+        return response()->json([
+            'status' => 'success',
+        ]);
     }
 }

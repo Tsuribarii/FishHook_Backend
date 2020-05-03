@@ -20,7 +20,7 @@ class MypageController extends Controller
     {
         //모델과 컨트롤러 연결
         $this->user_model = new User();
-        // $this->middleware('jwt.auth');
+        $this->middleware('jwt.auth');
 
     }
 
@@ -56,9 +56,9 @@ class MypageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Request $request)
     {
-        $user = User::where('id',1)->first();
+        $user = Auth::user();
         return response()->json([
             'user'=>$user,
         ]);
@@ -66,14 +66,14 @@ class MypageController extends Controller
 
     public function checkshow()
     {
-        $user = User::where('id',1)->first();
-        $rental = DB::table('ship_rentals')
-            ->join('users', 'users.id', '=', 'ship_rentals.user_id')->get();
+        $user = User::find(Auth::user()->id);
+        // $rental = DB::table('ship_rentals')
+        //     ->join('users', 'ship_rentals.user_id','=','users.id', )->get();
         
             return response()->json([
             'user'=>$user,
             // 'ship'=>$ship,
-            'rental'=>$rental
+            'rental'=>ShipRental::where('user_id', Auth::id())->get()
         ]);
     }
 
@@ -85,7 +85,7 @@ class MypageController extends Controller
      */
     public function edit()
     {
-        $user = User::where('id',1)->first();
+        $user = User::find(Auth::user()->id);
         return response()->json([
             'user'=>$user,
         ]);
@@ -106,9 +106,9 @@ class MypageController extends Controller
             'phone_number' => 'required',
         ]);
         
-        $user = User::findOrFail($id);
-      
-          if ($request->hasFile('profile_photo')) {
+        $user = User::find(Auth::user()->id);
+        $currentphoto = $user->profile_photo;
+          if ($request->photo != $currentphoto) {
               $image = $request->file('profile_photo');
               $name = $image->getClientOriginalName();
               $destinationPath = public_path('/images');
@@ -133,7 +133,7 @@ class MypageController extends Controller
      */
     public function destroy()
     {
-        $user = User::where('id',1)->first()
+        $user = User::find(Auth::user()->id)
             // ->where('profile_photo')
             ->update(['profile_photo'=>'default.jpg']);
             
