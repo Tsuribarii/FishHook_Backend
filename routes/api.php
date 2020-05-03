@@ -76,3 +76,7 @@ Route::get('/tide', 'TideInformationsController@tide');
 
 //낚시터 정보
 Route::get('/fishing', 'FishingPlacesController@fishing');
+
+//랭킹 정보
+Route::get('/rank', 'RankController@rank');
+Route::get('/rank/delete/{id}', 'RankController@destroy');
