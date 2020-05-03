@@ -20,7 +20,7 @@ class MypageController extends Controller
     {
         //모델과 컨트롤러 연결
         $this->user_model = new User();
-        // $this->middleware('jwt.auth');
+        $this->middleware('jwt.auth');
 
     }
 
@@ -56,9 +56,9 @@ class MypageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Request $request)
     {
-        $user = User::find(Auth::user()->id);
+        $user = Auth::user();
         return response()->json([
             'user'=>$user,
         ]);
