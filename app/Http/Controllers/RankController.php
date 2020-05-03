@@ -21,8 +21,15 @@ class RankController extends Controller
             'rank_of_fish'=>$rank_of_fish
         ]);
     }
-    public function destroy($id)
+    public function destroy($request, $id)
     {
+        //토큰 확인
+        $token = $request->header('authorization');
+        if($token != ''){
+            return response()->json([
+                'message' => 'App key not found'
+                ], 401);    
+        }
         $rank = Ranking::findOrFail($id);
         $rank->delete();
         return response()->json([
