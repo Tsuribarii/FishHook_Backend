@@ -16,9 +16,9 @@ class Ship extends Model
         return $this->hasMany('App\ShipRental');
     }
 
-    // 하나의 배는 하나의 업자를 가질 수 있다
+    // 하나의 업자는 여러 배를 가질 수 있다
     public function ship_owners()
     {
-        return $this->hasOne(ShipOwner::class);
+        return $this->belongsTo('App\ship');
     }
 }
