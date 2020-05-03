@@ -73,8 +73,8 @@ class BoardController extends Controller
          ]);
 
          return response()->json([
-            'message' => '저장되었습니다.'
-           ]);
+            'status' => 'success'
+            ], 200);
     }
 
     /**
@@ -134,8 +134,8 @@ class BoardController extends Controller
         $board->update($request->all());
 
         return response()->json([
-            'message' => '업데이트 되었습니다.'
-           ]);
+            'status' => 'success'
+            ], 200);
     }
 
     /**
@@ -149,7 +149,7 @@ class BoardController extends Controller
         $board = Board::findOrFail($id);
         $board->delete();
         return response()->json([
-            'message' => '삭제 되었습니다.'
-           ]);
+            'status' => 'success'
+            ], 200);    
     }
 }
