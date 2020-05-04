@@ -22,13 +22,19 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //인증
 Route::post('auth/register', 'AuthController@register');
-
 Route::post('auth/login', 'AuthController@login'); 
+Route::get('/profile', 'AuthController@getAuthenticatedUser');
 
 //인증된 사용자면 라우트 접근 가능
 Route::group([ 'middleware'=> 'jwt.auth'], function () { 
     Route::get( 'auth/user', 'AuthController@user'); 
     Route::get('auth/logout', 'AuthController@logout');
+
+}); 
+
+Route::group([ 'middleware'=> 'jwt.refresh'], function () { 
+    Route::get( 'auth/refresh', 'AuthController@refresh'); 
+});
 
 //마이페이지 
 Route::get('/myabout', 'MypageController@show');
@@ -40,13 +46,7 @@ Route::get('/mycheck', 'MypageController@checkshow');
 Route::post('/ownerstore', 'ShipController@ownerstore');
 Route::post('/shipstore', 'ShipController@shipstore');
 Route::post('/rentalstore', 'ShipController@rentalstore');
-}); 
-
-Route::group([ 'middleware'=> 'jwt.refresh'], function () { 
-    Route::get( 'auth/refresh', 'AuthController@refresh'); 
-});
-
-
+Route::get('/shipshow', 'ShipController@rentalstore');
 
 //커뮤니티
 Route::get('/list', 'BoardController@index')->name('list');
