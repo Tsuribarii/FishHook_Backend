@@ -14,16 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 //인증
-Route::post('auth/register', 'AuthController@register');
-Route::post('auth/login', 'AuthController@login'); 
-Route::get('/profile', 'AuthController@getAuthenticatedUser');
+Route::group(['middleware' => 'cors'], function () {
+    
+    Route::post('auth/register', 'AuthController@register');
+    Route::post('auth/login', 'AuthController@login'); 
+    Route::get('/profile', 'AuthController@getAuthenticatedUser');
+    
+});
 
 //인증된 사용자면 라우트 접근 가능
 Route::group([ 'middleware'=> 'jwt.auth'], function () { 
