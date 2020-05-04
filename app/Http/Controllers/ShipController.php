@@ -49,7 +49,7 @@ class ShipController extends Controller
 
     public function shipshow()
     {
-        $ship = Ship::where('id',$id)->first();
+        $ship = Ship::where('id',1)->first();
         return response()->json([
             'ship'=>$ship,
         ]);
