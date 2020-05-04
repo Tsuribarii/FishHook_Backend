@@ -113,11 +113,7 @@ class MypageController extends Controller
             'phone_number' => 'required',
         ]);
         
-<<<<<<< HEAD
-        $user = User::findOrFail($id);
-=======
         $user = User::find(Auth::user()->id);
->>>>>>> b16571412dadc2ce67c11f4e4fc44bdc18f29c77
         $currentphoto = $user->profile_photo;
           if ($request->photo != $currentphoto) {
               $image = $request->file('profile_photo');

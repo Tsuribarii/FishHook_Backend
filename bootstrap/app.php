@@ -1,5 +1,13 @@
 <?php
 
+// $app->register(Fruitcake\Cors\CorsServiceProvider::class);
+
+// $app->configure('cors');
+
+// $app->middleware([
+//     Fruitcake\Cors\HandleCors::class,
+// ]);
+
 /*
 |--------------------------------------------------------------------------
 | Create The Application
