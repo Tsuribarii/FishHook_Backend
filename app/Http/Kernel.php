@@ -14,9 +14,13 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
+<<<<<<< HEAD
         \App\Http\Middleware\Cors::class,
         \App\Http\Middleware\TrustProxies::class,
+=======
+>>>>>>> cors
         \Fruitcake\Cors\HandleCors::class,
+        \App\Http\Middleware\TrustProxies::class,
         \App\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
@@ -53,7 +57,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        // 'cors'=> \ App \ Http \ Middleware \ Cors :: class,
+        'cors'=> \ App \ Http \ Middleware \ Cors :: class,
         'jwt.auth'=> \ Tymon \ JWTAuth \ Middleware \ GetUserFromToken :: class, 
         'jwt.refresh'=> \ Tymon \ JWTAuth \ Middleware \ RefreshToken :: class, 
         'auth' => \App\Http\Middleware\Authenticate::class,
