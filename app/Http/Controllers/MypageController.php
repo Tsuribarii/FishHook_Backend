@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\User;
 use App\Ship;
+use Auth;
 use App\ShipRental;
 
 class MypageController extends Controller
@@ -20,7 +21,7 @@ class MypageController extends Controller
     {
         //모델과 컨트롤러 연결
         $this->user_model = new User();
-        // $this->middleware('auth');
+        // $this->middleware('jwt.auth');
 
     }
 
@@ -56,23 +57,29 @@ class MypageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        $user = User::where('id',$id)->first();
+        $user = Auth::user();
+        // $user = Auth::find($id);
+        // $user = User::where('id',$id)->first();
         return response()->json([
             'user'=>$user,
         ]);
     }
 
-    public function checkshow($id)
+    public function checkshow()
     {
-        $user = User::where('id',$id)->first();
-        $ship = Ship::where('id',$id)->first();
-        $rental = ShipRental::where('id',$id)->first();
-        return response()->json([
-            'user'=>$user,
-            'ship'=>$ship,
-            'rental'=>$rental
+        $user = User::find(Auth::user()->id);
+        // $rental = DB::table('ship_rentals')
+        //     ->join('users', 'ship_rentals.user_id','=','users.id', )->get();
+        
+            return response()->json([
+            'user'=>$user
+            
+            
+            ,
+            // 'ship'=>$ship,
+            'rental'=>ShipRental::where('user_id', Auth::id())->get()
         ]);
     }
 
@@ -82,9 +89,9 @@ class MypageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        $user = User::where('id',$id)->first();
+        $user = User::find(Auth::user()->id);
         return response()->json([
             'user'=>$user,
         ]);
@@ -98,7 +105,7 @@ class MypageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     { 
         // \Log::debug($request->all());
         $this->validate($request, [
@@ -106,7 +113,11 @@ class MypageController extends Controller
             'phone_number' => 'required',
         ]);
         
+<<<<<<< HEAD
         $user = User::findOrFail($id);
+=======
+        $user = User::find(Auth::user()->id);
+>>>>>>> b16571412dadc2ce67c11f4e4fc44bdc18f29c77
         $currentphoto = $user->profile_photo;
           if ($request->photo != $currentphoto) {
               $image = $request->file('profile_photo');
@@ -121,8 +132,8 @@ class MypageController extends Controller
             // $user->save();
             
             return response()->json([
-            'message' => '업데이트 되었습니다.'
-           ]);
+                'status' => 'success'
+                ], 200);
     }
 
     /**
@@ -131,8 +142,9 @@ class MypageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
+<<<<<<< HEAD
         $user = User::findOrFail($id)
             // ->where('profile_photo')
             ->update(['profile_photo'=>'default.jpg']);
@@ -140,5 +152,14 @@ class MypageController extends Controller
             return response()->json([
                 'message' => '삭제 되었습니다.'
                ]);
+=======
+        $user = User::find(Auth::user()->id)
+            // ->where('profile_photo')
+            ->update(['profile_photo'=>'default.jpg']);
+            
+        return response()->json([
+            'status' => 'success'
+            ], 200);
+>>>>>>> b16571412dadc2ce67c11f4e4fc44bdc18f29c77
     }
 }
