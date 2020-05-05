@@ -26,7 +26,7 @@ Route::group(['middleware' => 'cors'], function () {
     
     Route::post('auth/register', 'AuthController@register');
     Route::post('auth/login', 'AuthController@login'); 
-    Route::get('/profile', 'AuthController@getAuthenticatedUser');
+    Route::get('auth/profile', 'AuthController@getAuthenticatedUser');
     
 });
 

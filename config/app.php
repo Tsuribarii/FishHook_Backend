@@ -139,7 +139,8 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
-        // Intervention\Image\ImageServiceProvider::class,
+	    // Intervention\Image\ImageServiceProvider::class,
+	Fruitcake\Cors\CorsServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,

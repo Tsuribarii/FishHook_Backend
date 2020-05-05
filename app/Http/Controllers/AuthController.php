@@ -18,7 +18,8 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        // \Log::debug($request);
+	    \Log::debug("register");
+	    \Log::debug($request);
         $validator = Validator::make($request->json()->all() , [
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string|min:6', 
@@ -33,11 +34,11 @@ class AuthController extends Controller
         }
 
         $user = User::create([
-            'email' => $request->json()->get('email'),
-            'password' => Hash::make($request->json()->get('password')),
-            'name' => $request->json()->get('name'),
-            'roles' => $request->json()->get('roles'),
-            'phone_number' => $request->json()->get('phone_number'),
+            'email' => $request->get('email'),
+            'password' => Hash::make($request->get('password')),
+            'name' => $request->get('name'),
+            'roles' => $request->get('roles'),
+            'phone_number' => $request->get('phone_number'),
             
         ]);
 
@@ -48,8 +49,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        \Log::debug($request);
-        $credentials = $request->json()->all();
+        $credentials = $request->only('email','password');
 
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
@@ -57,12 +57,12 @@ class AuthController extends Controller
             }
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token'], 500);
-        }
+	}
         return response()->json( compact('token') );
     }
 
-    public function getAuthenticatedUser()
-    {
+    public function getAuthenticatedUser(Request $request)
+    {   
         try {
             if (! $user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['user_not_found'], 404);
@@ -73,7 +73,8 @@ class AuthController extends Controller
             return response()->json(['token_invalid'], $e->getStatusCode());
         } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
             return response()->json(['token_absent'], $e->getStatusCode());
-        }
+	}
+//	    return response()->json(compact('user'));
         return response()->json(compact('user'));
     }
 
