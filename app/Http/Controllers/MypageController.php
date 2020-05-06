@@ -74,10 +74,7 @@ class MypageController extends Controller
         //     ->join('users', 'ship_rentals.user_id','=','users.id', )->get();
         
             return response()->json([
-            'user'=>$user
-            
-            
-            ,
+            'user'=>$user,
             // 'ship'=>$ship,
             'rental'=>ShipRental::where('user_id', Auth::id())->get()
         ]);
@@ -140,15 +137,6 @@ class MypageController extends Controller
      */
     public function destroy()
     {
-<<<<<<< HEAD
-        $user = User::findOrFail($id)
-            // ->where('profile_photo')
-            ->update(['profile_photo'=>'default.jpg']);
-            
-            return response()->json([
-                'message' => '삭제 되었습니다.'
-               ]);
-=======
         $user = User::find(Auth::user()->id)
             // ->where('profile_photo')
             ->update(['profile_photo'=>'default.jpg']);
@@ -156,6 +144,5 @@ class MypageController extends Controller
         return response()->json([
             'status' => 'success'
             ], 200);
->>>>>>> b16571412dadc2ce67c11f4e4fc44bdc18f29c77
     }
 }

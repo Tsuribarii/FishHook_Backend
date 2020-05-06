@@ -19,9 +19,12 @@ class CreateBoardsTable extends Migration
             $table->unsignedBigInteger('user_id')->comment("작성자 번호");
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
+            $table->unsignedBigInteger('tide')->comment("물때");
+            $table->foreign('tide')->references('id')->on('tide_informations')->onDelete('cascade');
+
             $table->string('title')->comment("게시글 제목");
             $table->string('species')->comment("어종 이름");
-            $table->string('tide')->comment("물때");
+            // $table->string('tide')->comment("물때");
             $table->string('bait')->comment("미끼");
             $table->string('location')->comment("위치");
             $table->text('content')->comment("게시글 내용");
