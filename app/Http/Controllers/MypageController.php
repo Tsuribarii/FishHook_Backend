@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use App\User;
 use App\Ship;
 use Auth;
@@ -73,10 +74,7 @@ class MypageController extends Controller
         //     ->join('users', 'ship_rentals.user_id','=','users.id', )->get();
         
             return response()->json([
-            'user'=>$user
-            
-            
-            ,
+            'user'=>$user,
             // 'ship'=>$ship,
             'rental'=>ShipRental::where('user_id', Auth::id())->get()
         ]);
@@ -106,6 +104,7 @@ class MypageController extends Controller
      */
     public function update(Request $request)
     { 
+        // \Log::debug($request->all());
         $this->validate($request, [
             'password' => 'required',
             'phone_number' => 'required',
