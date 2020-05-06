@@ -27,7 +27,7 @@ class BoardController extends Controller
     public function index()
     {
         //게시글 리스트 
-        $board =  Board::all();
+        $board =  Board::latest()->paginate(10);
 
         // $user = User::where('id',$board->user_id)->first();
         return response()->json([
