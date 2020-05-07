@@ -72,10 +72,8 @@ class MypageController extends Controller
         $user = User::find(Auth::user()->id);
         // $rental = DB::table('ship_rentals')
         //     ->join('users', 'ship_rentals.user_id','=','users.id', )->get();
-        
-            return response()->json([
-            'rental'=>ShipRental::where('user_id', Auth::id())->get()
-        ]);
+        $rental = ShipRental::where('user_id',Auth::id())->get();
+            return response()->json($rental);
     }
 
     /**edit
