@@ -78,7 +78,7 @@ class MypageController extends Controller
         // 일반유저의 예약현황
         }else{
         $rentaluser = ShipRental::where('user_id', Auth::id())->get();
-        return response()->json([$rentaluser]);
+        return response()->json($rentaluser);
         }
     }
 
