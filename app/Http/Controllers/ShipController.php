@@ -68,7 +68,7 @@ class ShipController extends Controller
         ]);
         $user = Auth::user()->id;
         // $owner = ShipOwner::where('user_id',Auth::id())->first()->ships->first()->id;
-        return $owner;
+        // return $owner;
         $ship = new Ship([
             //아이디 받아오는 부분 미완
             // 'owner_id'=>Auth::user()->id,
