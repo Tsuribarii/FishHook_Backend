@@ -71,14 +71,35 @@ class MypageController extends Controller
     {
         //대여자의 예약현황
         if(Auth::user()->roles=='2'){
-        $ship_id = ShipOwner::where('user_id',Auth::id())->first()->ships->first()->id;
-        $rentalowner = ShipRental::where('ship_id', $ship_id)->get();
-        return response()->json($rentalowner);
+        //첫번째 ship정보의 id
+            $ship_id = ShipOwner::where('user_id',Auth::id())->first()->ships->first()->id;
+            // return $ship_id;
+            $rentalowner = ShipRental::where('ship_id', $ship_id)->get();
+            return response()->json($rentalowner);
 
         // 일반유저의 예약현황
         }else{
+
+        //예약정보
         $rentaluser = ShipRental::where('user_id', Auth::id())->get();
-        return response()->json([$rentaluser]);
+        // return response()->json($rentaluser);
+        //배정보
+        $ship_id = ShipRental::where('user_id',Auth::id())->get();
+        return $ship_id;
+        $ship = Ship::where('id',$ship_id)->get();
+        return $ship;
+        // $value = array(
+        //     "ship"=>$ship,
+        //     "retaluser"=>$rentaluser
+        // );
+        // $out = array_values($value);
+        // return json_encode($value);
+        // return $out;
+
+        return response()->json([
+            'ship'=>$ship,
+            'rentaluser'=>$rentaluser
+        ]);
         }
     }
 
