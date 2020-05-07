@@ -18,7 +18,7 @@ class RankController extends Controller
             ->take(10)
             ->get();
         return response()->json([
-            'rank_of_fish'=>$rank_of_fish
+            $rank_of_fish
         ]);
     }
     public function destroy($request, $id)
