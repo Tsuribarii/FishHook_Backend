@@ -9,6 +9,7 @@ use App\User;
 use App\ShipRental;
 use App\ShipOwner;
 use App\Ship;
+use App\Http\Controllers\DB;
 
 class ShipController extends Controller
 {
@@ -64,9 +65,10 @@ class ShipController extends Controller
             'departure_time' => 'required',
             'arrival_time' => 'required',
         ]);
-
+        $user = Auth::user()->id;
         $ship = new Ship([
-            'owner_id' => Auth::user()->id,
+            //아이디 받아오는 부분 미완
+            'owner_id' =>ShipOwner::where('user_id', Auth::id())->get(),
             'people' => $request['people'],
             'cost' => $request['cost'],
             'departure_time' => $request['departure_time'],

@@ -19,6 +19,6 @@ class Ship extends Model
     // 하나의 업자는 여러 배를 가질 수 있다
     public function ship_owners()
     {
-        return $this->belongsTo('App\ship');
+        return $this->belongsTo('App\ShipOwner');
     }
 }

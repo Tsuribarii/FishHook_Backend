@@ -22,7 +22,7 @@ class CreateShipsTable extends Migration
 
             $table->integer('people')->comment("인원");
             $table->integer('cost')->comment("비용");
-
+            $table->string('name')->comment("이름");
             $table->string('departure_time')->comment("출항시간");
             $table->string('arrival_time')->comment("입항시간");
 
