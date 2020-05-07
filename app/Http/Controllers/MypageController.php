@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Tymon\JWTAuth\Facades\JWTAuth;
+// use App\Http\Controllers\DB;
 use App\User;
 use App\Ship;
+use App\ShipOwner;
 use Auth;
 use App\ShipRental;
 
@@ -61,19 +64,22 @@ class MypageController extends Controller
     {
         $user = Auth::user();
         // $user = Auth::find($id);
-        // $user = User::where('id',$id)->first();
-        return response()->json([
-            'user'=>$user,
-        ]);
+        return response()->json($user);
     }
 
     public function checkshow()
     {
-        $user = User::find(Auth::user()->id);
-        // $rental = DB::table('ship_rentals')
-        //     ->join('users', 'ship_rentals.user_id','=','users.id', )->get();
-        $rental = ShipRental::where('user_id',Auth::id())->get();
-            return response()->json($rental);
+        //대여자의 예약현황
+        if(Auth::user()->roles=='2'){
+        $ship_id = ShipOwner::where('user_id',Auth::id())->first()->ships->first()->id;
+        $rentalowner = ShipRental::where('ship_id', $ship_id)->get();
+        return response()->json($rentalowner);
+
+        // 일반유저의 예약현황
+        }else{
+        $rentaluser = ShipRental::where('user_id', Auth::id())->get();
+        return response()->json([$rentaluser]);
+        }
     }
 
     /**edit
