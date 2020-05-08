@@ -20,9 +20,10 @@ class ShipController extends Controller
         // $this->middleware('auth.jwt');
     }
 
+    //영업 등록
     public function ownerStore(Request $request)
     {
-        \Log::debug($request);
+        // \Log::debug($request);
         $this->validate($request, [
             'location' => 'required',
             'business_time' => 'required',
@@ -47,18 +48,18 @@ class ShipController extends Controller
     {
         //
     }
-
-    public function shipshow()
+    
+    //ship정보
+    public function shipshow($id)
     {
-        $ship = Ship::where('id',1)->first();
-        return response()->json([
-            'ship'=>$ship,
-        ]);
+        $ship = Ship::find($id);
+        return response()->json($ship);
     }
-    //미완
+
+    //배 등록
     public function shipStore(Request $request)
     {
-        \Log::debug($request);
+        // \Log::debug($request);
         $this->validate($request, [
             'people' => 'required',
             'cost' => 'required',
@@ -66,13 +67,10 @@ class ShipController extends Controller
             'departure_time' => 'required',
             'arrival_time' => 'required',
         ]);
-        $user = Auth::user()->id;
-        // $owner = ShipOwner::where('user_id',Auth::id())->first()->ships->first()->id;
-        // return $owner;
+
         $ship = new Ship([
-            //아이디 받아오는 부분 미완
-            // 'owner_id'=>Auth::user()->id,
-            'owner_id' =>ShipOwner::where('user_id',Auth::id())->first()->ships->first()->id,
+            //shipowner테이블의 id를 받아옴
+            'owner_id' =>ShipOwner::where('user_id',Auth::id())->first()->id,
             'people' => $request['people'],
             'cost' => $request['cost'],
             'name' => $request['name'],
@@ -86,7 +84,8 @@ class ShipController extends Controller
             'status' => 'success',
         ]);
     }
-    //미완
+    
+    //예약
     public function rentalStore(Request $request)
     {
         \Log::debug($request);
