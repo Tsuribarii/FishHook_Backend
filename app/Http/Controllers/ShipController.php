@@ -7,8 +7,8 @@ use Log;
 use Auth;
 use App\User;
 use App\ShipRental;
-use App\ShipOwner;
 use App\Ship;
+use App\ShipOwner;
 use App\Http\Controllers\DB;
 
 class ShipController extends Controller
@@ -62,15 +62,20 @@ class ShipController extends Controller
         $this->validate($request, [
             'people' => 'required',
             'cost' => 'required',
+            'name' => 'required',
             'departure_time' => 'required',
             'arrival_time' => 'required',
         ]);
         $user = Auth::user()->id;
+        // $owner = ShipOwner::where('user_id',Auth::id())->first()->ships->first()->id;
+        // return $owner;
         $ship = new Ship([
             //아이디 받아오는 부분 미완
-            'owner_id' =>ShipOwner::where('user_id', Auth::id())->get(),
+            // 'owner_id'=>Auth::user()->id,
+            'owner_id' =>ShipOwner::where('user_id',Auth::id())->first()->ships->first()->id,
             'people' => $request['people'],
             'cost' => $request['cost'],
+            'name' => $request['name'],
             'departure_time' => $request['departure_time'],
             'arrival_time' => $request['arrival_time'],
             ]);
