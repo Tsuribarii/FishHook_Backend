@@ -17,8 +17,10 @@ class WeatherInformationsController extends Controller
         // $path = 'C:\Users\PC\jekim\test.json';
         // $datas = json_decode(file_get_contents($path), true);
         // var_dump($datas);
-        return WeatherInformation::all();
-
+        $weather = WeatherInformation::all();
+        return response()->json(
+            $weather
+        );
     }
     //json -> database 저장함수  
     public function weather_json()
