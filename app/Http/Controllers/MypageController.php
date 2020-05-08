@@ -69,37 +69,30 @@ class MypageController extends Controller
 
     public function checkshow()
     {
-        //대여자의 예약현황
+        //대여자의 예약현황 (예약정보, 유저정보)
+        
         if(Auth::user()->roles=='2'){
-        //첫번째 ship정보의 id
+            
             $ship_id = ShipOwner::where('user_id',Auth::id())->first()->ships->first()->id;
-            // return $ship_id;
-            $rentalowner = ShipRental::where('ship_id', $ship_id)->get();
-            return response()->json($rentalowner);
+            $rental = DB::table('ship_rentals')
+                ->where('ship_id',$ship_id)
+                ->join('users','ship_rentals.user_id','=','users.id')
+                ->select('ship_rentals.id','ship_id','departure_date','number_of_people','ship_rentals.created_at','users.id','users.name')
+                ->get();
+            
+            return response()->json($rental);
 
-        // 일반유저의 예약현황
+        // 일반유저의 예약현황 (예약정보, 배정보)
         }else{
 
-        //예약정보
-        $rentaluser = ShipRental::where('user_id', Auth::id())->get();
-        // return response()->json($rentaluser);
-        //배정보
-        $ship_id = ShipRental::where('user_id',Auth::id())->get();
-        return $ship_id;
-        $ship = Ship::where('id',$ship_id)->get();
-        return $ship;
-        // $value = array(
-        //     "ship"=>$ship,
-        //     "retaluser"=>$rentaluser
-        // );
-        // $out = array_values($value);
-        // return json_encode($value);
-        // return $out;
-
-        return response()->json([
-            'ship'=>$ship,
-            'rentaluser'=>$rentaluser
-        ]);
+            // $ship_id = ShipOwner::where('user_id',Auth::id())->first()->ships->first()->id;
+            $rental = DB::table('ship_rentals')
+                ->where('user_id',Auth::id())
+                ->join('ships','ship_rentals.ship_id','=','ships.id')
+                ->select('ship_rentals.id','ship_id','departure_date','number_of_people','ship_rentals.created_at','ships.id','ships.name','ships.cost')
+                ->get();
+       
+            return response()->json($rental);
         }
     }
 
