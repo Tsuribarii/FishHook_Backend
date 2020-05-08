@@ -31,7 +31,9 @@ class FishingPlacesController extends Controller
             array_push($array, $data);
         }
 
-        return $array;
+        return response()->json(
+            $array
+        );
     }
     public function fishing_json()
     {

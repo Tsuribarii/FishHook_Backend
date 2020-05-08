@@ -17,9 +17,9 @@ class RankController extends Controller
             ->orderBy('rankings.length', 'desc')
             ->take(10)
             ->get();
-        return response()->json([
+        return response()->json(
             $rank_of_fish
-        ]);
+        );
     }
     public function destroy($request, $id)
     {

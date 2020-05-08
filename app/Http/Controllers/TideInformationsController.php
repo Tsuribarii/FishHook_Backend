@@ -14,7 +14,10 @@ class TideInformationsController extends Controller
      */
     public function tide()
     {
-        return TideInformation::all();
+        $tide = TideInformation::all();
+        return response()->json(
+            $tide
+        );
     }
     public function tide_json()
     {
