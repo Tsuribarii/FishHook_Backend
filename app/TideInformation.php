@@ -8,7 +8,7 @@ class TideInformation extends Model
 {
     protected $table = 'tide_informations';
     protected $fillable = [
-        'id', 'location','date','hide_tide','created_at','updated_at'
+        'id','location','date','hide_tide','created_at','updated_at'
     ];
 
     // 하나의 물때은 여러 글을 가질 수 있다

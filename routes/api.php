@@ -80,7 +80,7 @@ Route::get('/weather', 'WeatherInformationsController@weather');
 
 //물때 정보
 Route::get('/tide', 'TideInformationsController@tide');
-
+Route::get('/tider', 'TideInformationsController@tide_json');
 //낚시터 정보
 Route::get('/fishing', 'FishingPlacesController@fishing');
 
