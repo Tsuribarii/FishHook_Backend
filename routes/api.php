@@ -74,8 +74,7 @@ Route::get('/shipshow/{id}', 'ShipController@shipshow');
 Route::get('/weather', 'WeatherInformationsController@weather');
 
 //물때 정보
-Route::get('/tide', 'TideInformationsController@tide');
-Route::get('/tider', 'TideInformationsController@tide_json');
+Route::post('/tide', 'TideInformationsController@tide');
 //낚시터 정보
 Route::get('/fishing', 'FishingPlacesController@fishing');
 
