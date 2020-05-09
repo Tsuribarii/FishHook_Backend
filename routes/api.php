@@ -46,26 +46,21 @@ Route::get('/myabout', 'MypageController@show');
 Route::get('/myedit', 'MypageController@edit');
 Route::post('/myupdate', 'MypageController@update');
 Route::get('/mycheck', 'MypageController@checkshow');
+Route::get('/status', 'MypageController@status');
 
 //예약
 Route::post('/ownerstore', 'ShipController@ownerstore');
 Route::post('/shipstore', 'ShipController@shipstore');
 Route::post('/rentalstore', 'ShipController@rentalstore');
-Route::get('/shipshow', 'ShipController@rentalstore');
+Route::get('/shipshow', 'ShipController@shipshow');
 
 //커뮤니티
 Route::get('/list', 'BoardController@index')->name('list');
-
 Route::get('/create', 'BoardController@create');
-
 Route::post('/store', 'BoardController@store');
-
 Route::get('/show/{id}', 'BoardController@show');
-
 Route::get('/edit/{id}', 'BoardController@edit');
-
 Route::post('/update/{id}', 'BoardController@update');
-
 Route::get('/delete/{id}', 'BoardController@destroy');
 
 //예약

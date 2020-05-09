@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ShipOwner extends Model
 {
     protected $fillable = [
-        'id', 'user_id','location','business_time','homepage','created_at','updated_at'
+        'id', 'user_id','owner_name','location','business_time','homepage','created_at','updated_at'
     ];
 
     // 하나의 회원는 여러 영업를 가질 수 있다
@@ -19,6 +19,6 @@ class ShipOwner extends Model
     // 하나의 업자는 여러 배를 가질 수 있다
     public function ships()
     {
-        return $this->hasMany('App\ship','owner_id');
+        return $this->hasMany('App\Ship','owner_id');
     }
 }
