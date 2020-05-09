@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\TideInformation;
 
 class TideInformationsController extends Controller
@@ -12,12 +13,16 @@ class TideInformationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function tide()
-    {
-        $tide = TideInformation::all();
-        return response()->json(
-            $tide
-        );
+    
+    
+    public function tide($request){
+        $path = 'C:\Users\PC\jekim\FishHook_HighTide\HighTide.json';
+        $datas = json_decode(file_get_contents($path), true);
+        $location = $request->header('location');
+        $data = array_filter($datas, function($value) {
+            $value[0] == $location;
+          });  
+          return $data;
     }
     public function tide_json()
     {
