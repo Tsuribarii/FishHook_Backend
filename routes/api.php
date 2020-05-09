@@ -46,6 +46,7 @@ Route::get('/myabout', 'MypageController@show');
 Route::get('/myedit', 'MypageController@edit');
 Route::post('/myupdate', 'MypageController@update');
 Route::get('/mycheck', 'MypageController@checkshow');
+Route::get('/status', 'MypageController@status');
 
 //예약
 Route::post('/ownerstore', 'ShipController@ownerstore');

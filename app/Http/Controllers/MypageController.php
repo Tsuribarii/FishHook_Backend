@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use DB;
+// use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\DB;
 // use App\Http\Controllers\DB;
 use App\User;
 use App\Ship;
 use App\ShipOwner;
 use Auth;
 use App\ShipRental;
+use Illuminate\Support\Arr;
 
 class MypageController extends Controller
 {
@@ -70,7 +72,6 @@ class MypageController extends Controller
     public function checkshow()
     {
         //대여자의 예약현황 (예약정보, 유저정보)
-        
         if(Auth::user()->roles=='2'){
             
             $ship_id = ShipOwner::where('user_id',Auth::id())->first()->ships->first()->id;
@@ -85,14 +86,93 @@ class MypageController extends Controller
         // 일반유저의 예약현황 (예약정보, 배정보)
         }else{
 
-            // $ship_id = ShipOwner::where('user_id',Auth::id())->first()->ships->first()->id;
-            $rental = DB::table('ship_rentals')
-                ->where('user_id',Auth::id())
-                ->join('ships','ship_rentals.ship_id','=','ships.id')
-                ->select('ship_rentals.id','ship_id','departure_date','number_of_people','ship_rentals.created_at','ships.id','ships.name','ships.cost')
+            $rental = DB::table('ships')
+                ->join('ship_rentals','ships.id','=','ship_rentals.ship_id')
+                ->join('ship_owners','ships.owner_id','=','ship_owners.id')
+                ->select('ship_rentals.id','ship_id','departure_date','number_of_people','cancel',
+                         'ship_rentals.created_at','ships.id','ships.name','ships.departure_time','ships.cost','ship_owners.owner_name')
                 ->get();
-       
-            return response()->json($rental);
+
+            $timenow = date("Y-m-d");
+            $newRental = array();       
+            $i=0;
+
+            foreach($rental as $data){
+                // departure_date 날짜 형식으로 바꾸기
+                $timetarget = date("Y-m-d",strtotime($data->departure_date));       
+                // 현재시간
+                $str_now = strtotime($timenow);                  
+                // 예약 시간                    
+                $str_target = strtotime($timetarget);                               
+
+                $newRental[$i]['id'] = $data->id;
+                $newRental[$i]['ship_id'] = $data->ship_id;
+                $newRental[$i]['departure_date'] = $data->departure_date;
+                $newRental[$i]['departure_time'] = $data->departure_time;
+                $newRental[$i]['number_of_people'] = $data->number_of_people;
+                $newRental[$i]['created_at'] = $data->created_at;
+                $newRental[$i]['name'] = $data->name;
+                $newRental[$i]['cost'] = $data->cost;
+                $newRental[$i]['owner_name'] = $data->owner_name;
+                        
+                if($data->cancel ==0){
+                    // 현재 시간과 비교
+                    if($str_now > $str_target){     
+                        $newRental[$i]['status'] = "이용 완료";
+                    }else{
+                        $newRental[$i]['status'] = "이용 예정";
+                    }
+                }else{
+                    $newRental[$i]['status'] = "취소 환불";
+                }
+            $i++;
+        }
+
+        return response()->json($newRental);
+        }
+    }
+
+    public function status(){
+
+        // 일반유저의 예약 현황 (전체)
+        if(Auth::user()->roles=='1'){
+            
+            $time = DB::table('ship_rentals')
+                ->where('user_id',Auth::id())
+                ->join('users','ship_rentals.user_id','=','users.id')
+                ->select('departure_date','cancel')
+                ->get();
+            
+            $all = count($time);
+            $reserve = 0;
+            $complete = 0;
+            $cancel = 0;
+            $newRental = array();  
+
+            foreach($time as $data){
+                // 현재시간
+                $timenow = date("Y-m-d");
+                // departure_date 날짜 형식으로 바꾸기
+                $timetarget = date("Y-m-d",strtotime($data->departure_date));  
+                // 현재시간 형식
+                $str_now = strtotime($timenow);                  
+                // 예약 시간 형식                 
+                $str_target = strtotime($timetarget);
+
+            if($data->cancel ==1){
+                // 현재 시간과 비교
+                if($str_now > $str_target){    
+                    $complete += 1; 
+                }else{
+                    $reserve += 1;
+                }
+            }else{
+                $cancel += 1;
+            }
+            // $i++;
+            }
+        $newRental = array('all'=>$all,'reserve'=>$reserve,'complete'=>$complete,'cancel'=>$cancel);
+        return response()->json($newRental);
         }
     }
 

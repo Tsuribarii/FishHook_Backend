@@ -18,7 +18,8 @@ class CreateShipOwnersTable extends Migration
 
             $table->unsignedBigInteger('user_id')->comment("회원 번호");
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            
+
+            $table->string('owner_name')->comment("사업장 이름");
             $table->string('location')->comment("사업장 주소");
             $table->string('business_time')->comment("영업 시작일");
             $table->string('homepage')->comment("홈페이지");
