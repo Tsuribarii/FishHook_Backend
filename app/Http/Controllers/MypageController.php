@@ -87,6 +87,7 @@ class MypageController extends Controller
         }else{
 
             $rental = DB::table('ships')
+                ->where('ship_rentals.user_id',Auth::id())
                 ->join('ship_rentals','ships.id','=','ship_rentals.ship_id')
                 ->join('ship_owners','ships.owner_id','=','ship_owners.id')
                 ->select('ship_rentals.id','ship_id','departure_date','number_of_people','cancel',
@@ -127,7 +128,6 @@ class MypageController extends Controller
                 }
             $i++;
         }
-
         return response()->json($newRental);
         }
     }
