@@ -17,7 +17,7 @@ class TideInformationsController extends Controller
     
     public function tide()
     {
-        $path = 'C:\Users\PC\jekim\FishHook_HighTide\HighTide.json';
+        $path = '/home/ubuntu/python/FishHook_HighTide/HighTide.json';
         $datas = json_decode(file_get_contents($path), true);
         $data = array_filter($datas, function($value) {
             $location = request('location');
