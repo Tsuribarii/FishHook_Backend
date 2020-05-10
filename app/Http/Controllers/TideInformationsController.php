@@ -30,7 +30,7 @@ class TideInformationsController extends Controller
         $tide_information = TideInformation::where('location',$tide_location->location)->get();
 
         return response()->json([
-            'tide_information'=>$tide_information
+            $tide_information
         ]);
     }
     public function tide_json()
