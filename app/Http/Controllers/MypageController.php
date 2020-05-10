@@ -74,9 +74,22 @@ class MypageController extends Controller
         //대여자의 예약현황 (예약정보, 유저정보)
         if(Auth::user()->roles=='2'){
             
-            $ship_id = ShipOwner::where('user_id',Auth::id())->first()->ships->first()->id;
+            // $ship_id = ShipOwner::where('user_id',Auth::id())->first()->ships->first()->id;
+            $ship_id = DB::table('ship_owners')
+                ->join('ships','ship_owners.id','=','ships.owner_id')
+                ->where('ship_owners.user_id',Auth::id())
+                ->select('ships.id')
+                ->get();
+            // return $ship_id;
+
+            //where 넣을 수 있게 배열로
+            $collection = collect($ship_id);
+            $plucked = $collection->pluck('id');
+            $plucked->all();
+            // return $plucked;
+
             $rental = DB::table('ship_rentals')
-                ->where('ship_id',$ship_id)
+                ->whereIn('ship_id',$plucked)
                 ->join('users','ship_rentals.user_id','=','users.id')
                 ->select('ship_rentals.id','ship_id','departure_date','number_of_people','ship_rentals.created_at','users.id','users.name')
                 ->get();
