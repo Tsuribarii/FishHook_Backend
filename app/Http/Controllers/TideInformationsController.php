@@ -25,6 +25,7 @@ class TideInformationsController extends Controller
         //     return $value[0] == $location;
         // });
         // return $data;
+        
         $tide = DB::table('tide_informations')
             ->select('tide_locations.id','tide_informations.location','date', 'hide_tide','created_at','updated_at')
             ->leftJoin('tide_locations', 'tide_informations.location', '=', 'tide_locations.location')
