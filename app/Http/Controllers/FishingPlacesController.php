@@ -38,7 +38,7 @@ class FishingPlacesController extends Controller
     public function fishing_json()
     {
         //json 가져오기
-        $path = 'C:\Users\PC\jekim\FishHook_FishingSpot\FishingSpot.json';
+        $path = '/home/ubuntu/python/FishHook_FishingSpot/FishingSpot.json';
         // $path = 'C:\Users\PC\jekim\FishHook_Back\storage\fishing.json';
         $datas = json_decode(file_get_contents($path), true);
         // key, value 지정
