@@ -15,7 +15,7 @@ class TideInformationsController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    public function tide()
+    public function tide($id)
     {
         // $path = 'C:\Users\PC\jekim\FishHook_HighTide\HighTide.json';
         // // '/home/ubuntu/python/FishHook_HighTide/HighTide.json'
@@ -26,13 +26,12 @@ class TideInformationsController extends Controller
         // });
         // return $data;
         
-        $tide = DB::table('tide_informations')
-            ->select('tide_locations.id','tide_informations.location','date', 'hide_tide','created_at','updated_at')
-            ->leftJoin('tide_locations', 'tide_informations.location', '=', 'tide_locations.location')
-            ->get();
-        return response()->json(
-            $tide
-        );
+        $tide_location = TideLocation::where('id',$id)->first();
+        $tide_information = TideInformation::where('location',$tide_location->location)->get();
+
+        return response()->json([
+            'tide_information'=>$tide_information
+        ]);
     }
     public function tide_json()
     {
