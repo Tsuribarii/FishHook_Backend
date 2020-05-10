@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\TideInformation;
+use App\TideLocation;
 
 class TideInformationsController extends Controller
 {
@@ -14,17 +15,23 @@ class TideInformationsController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    
     public function tide()
     {
-        $path = '/home/ubuntu/python/FishHook_HighTide/HighTide.json';
-        $datas = json_decode(file_get_contents($path), true);
-        $data = array_filter($datas, function($value) {
-            $location = request('location');
-            return $value[0] == $location;
-        });
-        return $data;
-          
+        // $path = 'C:\Users\PC\jekim\FishHook_HighTide\HighTide.json';
+        // // '/home/ubuntu/python/FishHook_HighTide/HighTide.json'
+        // $datas = json_decode(file_get_contents($path), true);
+        // $data = array_filter($datas, function($value) {
+        //     $location = request('location');
+        //     return $value[0] == $location;
+        // });
+        // return $data;
+        $tide = DB::table('tide_informations')
+            ->select('tide_locations.id','tide_informations.location','date', 'hide_tide','created_at','updated_at')
+            ->leftJoin('tide_locations', 'tide_informations.location', '=', 'tide_locations.location')
+            ->get();
+        return response()->json(
+            $tide
+        );
     }
     public function tide_json()
     {
