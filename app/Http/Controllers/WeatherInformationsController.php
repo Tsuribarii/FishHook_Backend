@@ -14,23 +14,22 @@ class WeatherInformationsController extends Controller
      */
     public function weather()
     {
-        // $path = 'C:\Users\PC\jekim\test.json';
-        // $datas = json_decode(file_get_contents($path), true);
-        // var_dump($datas);
         $weather = WeatherInformation::all();
         return response()->json(
             $weather
         );
+        var_dump($datas);
     }
     //json -> database 저장함수  
     public function weather_json()
     {
         //json 가져오기
-        $path = '/home/ubuntu/python/FishHook_Weather/weather.json';
-        $datas = json_decode(file_get_contents($path), true);
+        $path = 'C:\Users\PC\jekim\FishHook_Weather\weather.json';
+        $json = trim(file_get_contents($path), "\xEF\xBB\xBF");
+        $datas = json_decode($json, true);  
         // key, value 지정
         $json = [];
-        for ($i=0; $i < count($datas); $i++) {
+        for ($i=0; $i < count((is_countable($datas) ? $datas : [])); $i++) {
             $kk = array(
                 'location'   => $datas[$i][0],
                 'temperature' => $datas[$i][1],
