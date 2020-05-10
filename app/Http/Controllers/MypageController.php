@@ -158,8 +158,8 @@ class MypageController extends Controller
                 $str_now = strtotime($timenow);                  
                 // 예약 시간 형식                 
                 $str_target = strtotime($timetarget);
-
-            if($data->cancel ==1){
+            
+            if($data->cancel ==0){
                 // 현재 시간과 비교
                 if($str_now > $str_target){    
                     $complete += 1; 
