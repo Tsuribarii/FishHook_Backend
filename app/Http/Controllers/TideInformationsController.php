@@ -24,12 +24,12 @@ class TideInformationsController extends Controller
             return $value[0] == $location;
         });
         return $data;
-                
+          
     }
     public function tide_json()
     {
         //json 가져오기
-        $path = 'C:\Users\PC\jekim\FishHook_HighTide\HighTide.json';
+        $path = '/home/ubuntu/python/FishHook_HighTide/HighTide.json';
         $datas = json_decode(file_get_contents($path), true);
         // key, value 지정
         $json = [];
