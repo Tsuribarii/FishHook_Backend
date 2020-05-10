@@ -15,14 +15,16 @@ class TideInformationsController extends Controller
      */
     
     
-    public function tide($request){
+    public function tide()
+    {
         $path = 'C:\Users\PC\jekim\FishHook_HighTide\HighTide.json';
         $datas = json_decode(file_get_contents($path), true);
-        $location = $request->header('location');
         $data = array_filter($datas, function($value) {
-            $value[0] == $location;
-          });  
-          return $data;
+            $location = request('location');
+            return $value[0] == $location;
+        });
+        return $data;
+                
     }
     public function tide_json()
     {
