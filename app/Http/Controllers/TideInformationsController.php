@@ -29,9 +29,9 @@ class TideInformationsController extends Controller
         $tide_location = TideLocation::where('id',$id)->first();
         $tide_information = TideInformation::where('location',$tide_location->location)->get();
 
-        return response()->json([
+        return response()->json(
             $tide_information
-        ]);
+        );
     }
     public function tide_json()
     {
