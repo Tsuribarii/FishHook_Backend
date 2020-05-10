@@ -26,6 +26,7 @@ class WeatherInformationsController extends Controller
     public function weather_json()
     {
         //json 가져오기
+        //C:/Users/PC/jekim/FishHook_Weather/weather.json//
         $path = '/home/ubuntu/python/FishHook_Weather/weather.json';
         $datas = json_decode(file_get_contents($path), true);
         // key, value 지정
