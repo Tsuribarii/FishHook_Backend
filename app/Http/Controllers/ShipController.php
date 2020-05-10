@@ -9,7 +9,8 @@ use App\User;
 use App\ShipRental;
 use App\Ship;
 use App\ShipOwner;
-use App\Http\Controllers\DB;
+use Illuminate\Support\Facades\DB;
+// use App\Http\Controllers\DB;
 
 class ShipController extends Controller
 {
@@ -19,12 +20,37 @@ class ShipController extends Controller
         $this->user_model = new User();
         // $this->middleware('auth.jwt');
     }
+    
+    public function create()
+    {
+        //
+    }
+
+    //ship리스트
+    public function index()
+    {
+        $ship =  Ship::latest()->paginate(10);
+        return response()->json($ship);
+    }
+
+    //ship상세정보
+    public function shipshow($id)
+    {
+        $ship = DB::table('ship_owners')
+        ->join('ships','ship_owners.id','=','ships.owner_id')
+        ->where('ships.id',$id)
+        ->select('ships.id','owner_id','people','cost','name','departure_time','arrival_time',
+                'ship_owners.owner_name','location','business_time','homepage')
+        ->get();
+        return response()->json($ship);
+    }
 
     //영업 등록
     public function ownerStore(Request $request)
     {
-        // \Log::debug($request);
+        \Log::debug($request);
         $this->validate($request, [
+            'owner_name' => 'required',
             'location' => 'required',
             'business_time' => 'required',
             'homepage' => 'required',
@@ -32,6 +58,7 @@ class ShipController extends Controller
 
         $shipowner = new ShipOwner([
             'user_id'=>Auth::user()->id,
+            'owner_name' => $request['owner_name'],
             'location' => $request['location'],
             'business_time' => $request['business_time'],
             'homepage' => $request['homepage']
@@ -42,18 +69,6 @@ class ShipController extends Controller
         return response()->json([
             'status' => 'success',
         ]);
-    }
-    
-    public function create()
-    {
-        //
-    }
-    
-    //ship정보
-    public function shipshow($id)
-    {
-        $ship = Ship::find($id);
-        return response()->json($ship);
     }
 
     //배 등록
