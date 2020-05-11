@@ -36,4 +36,29 @@ class RankController extends Controller
             'status' => 'success'
             ], 200);    
     }
+    public function create(Request $request){
+        
+        $this->validate($request, [
+            'name' => 'required',
+            'fish_name' => 'required',
+            'length' => 'required',
+            'photo' => 'required',
+            'location' => 'required',
+            'created_at' => 'required'
+        ]);
+
+        return Ranking::create([
+            'user_id'=>\Auth::id(),
+            'name' => $request['name'],
+            'fish_name' => $request['fish_name'],
+            'length' => $request['length'],
+            'photo' => $request['photo'],
+            'location' => $request['location'],
+            'created_at' => $request['created_at']
+         ]);
+
+         return response()->json([
+            'status' => 'success'
+            ], 200);
+    }
 }

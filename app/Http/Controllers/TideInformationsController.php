@@ -44,7 +44,7 @@ class TideInformationsController extends Controller
             $kk = array(
                 'location'   => $datas[$i][0],
                 'date' => $datas[$i][1],
-                'hide_tide'  => $datas[$i][2]
+                'hide_tide'  => $datas[$i][2],
             );
             array_push($json, $kk);
         }
