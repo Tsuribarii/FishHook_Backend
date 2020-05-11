@@ -14,17 +14,18 @@ class WeatherInformationsController extends Controller
      */
     public function weather()
     {
-        $weather = WeatherInformation::all();
+        $tide_location = TideLocation::where('id',$id)->first();
+        $weather = WeatherInformation::where('location',$tide_location->location)->get();
+
         return response()->json(
             $weather
         );
-        var_dump($datas);
     }
     //json -> database 저장함수  
     public function weather_json()
     {
         //json 가져오기
-        $path = 'C:\Users\PC\jekim\FishHook_Weather\weather.json';
+        $path = '/home/ubuntu/python/FishHook_Weather/weather.json';
         $json = trim(file_get_contents($path), "\xEF\xBB\xBF");
         $datas = json_decode($json, true);  
         // key, value 지정
@@ -32,9 +33,15 @@ class WeatherInformationsController extends Controller
         for ($i=0; $i < count((is_countable($datas) ? $datas : [])); $i++) {
             $kk = array(
                 'location'   => $datas[$i][0],
-                'temperature' => $datas[$i][1],
-                'humidity'  => $datas[$i][2],
-                'wind_direction'  => $datas[$i][3]
+                'time' => $datas[$i][1],
+                'weather_status'  => $datas[$i][2],
+                'temperature'  => $datas[$i][3],
+                'wind_direction' => $datas[$i][4],
+                'wind_speed'  => $datas[$i][5],
+                'wave_height'  => $datas[$i][6],
+                'wave_direction'   => $datas[$i][7],
+                'wave_period' => $datas[$i][8],
+                'humidity'  => $datas[$i][9]
             );
             array_push($json, $kk);
         }
@@ -43,9 +50,15 @@ class WeatherInformationsController extends Controller
         // 키밸류로 만든 array를 돌려서 데이터베이스에 삽입
         foreach ($json as $res) {
             $weather->location      = $res['location'];
-            $weather->temperature      = $res['temperature'];
-            $weather->humidity    = $res['humidity'];
-            $weather->wind_direction     = $res['wind_direction'];
+            $weather->time      = $res['time'];
+            $weather->weather_status    = $res['weather_status'];
+            $weather->temperature     = $res['temperature'];
+            $weather->wind_direction      = $res['wind_direction'];
+            $weather->wind_speed      = $res['wind_speed'];
+            $weather->wave_height    = $res['wave_height'];
+            $weather->wave_direction     = $res['wave_direction'];
+            $weather->wave_period      = $res['wave_period'];
+            $weather->humidity      = $res['humidity'];
             $weather->save();
             $weather = new WeatherInformation();
         }
