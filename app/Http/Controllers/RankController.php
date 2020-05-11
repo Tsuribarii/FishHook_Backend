@@ -22,7 +22,11 @@ class RankController extends Controller
             $rank_of_fish
         );
     }
-
+    public function action_test(){
+        $command = escapeshellcmd('C:\Users\PC\jekim\rockfish\rockfish\main.py');
+        $output = shell_exec($command);
+        var_dump($output);
+    }
     public function store(Request $request)
     {
         $request->validate([
@@ -33,7 +37,7 @@ class RankController extends Controller
         ]);
 
         $ranking = new Ranking([
-            'user_id'   => Auth::user()->id,
+            'user_id'   => auth()->id(),
             'fish_name' => $request->get('fish_name'),
             'length'    => $request->get('length'),
             'photo'     => $request->get('photo'),
