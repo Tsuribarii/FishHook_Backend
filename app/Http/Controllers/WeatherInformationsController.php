@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\WeatherInformation;
+use App\TideLocation;
 
 class WeatherInformationsController extends Controller
 {
@@ -14,9 +15,7 @@ class WeatherInformationsController extends Controller
      */
     public function weather()
     {
-        $tide_location = TideLocation::where('id',$id)->first();
-        $weather = WeatherInformation::where('location',$tide_location->location)->get();
-
+        $weather = WeatherInformation::all();
         return response()->json(
             $weather
         );
