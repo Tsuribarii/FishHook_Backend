@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Ranking;
 use App\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class RankController extends Controller
 {
@@ -21,6 +22,26 @@ class RankController extends Controller
             $rank_of_fish
         );
     }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'fish_name' => 'required',
+            'length'    => 'required',
+            'photo'     => 'required',
+            'location'  => 'required'
+        ]);
+
+        $ranking = new Ranking([
+            'user_id'   => Auth::user()->id,
+            'fish_name' => $request->get('fish_name'),
+            'length'    => $request->get('length'),
+            'photo'     => $request->get('photo'),
+            'location'  => $request->get('location')
+        ]);
+        $ranking->save();
+        return response()->json(['status' => 'success'], 200);
+    }
     public function destroy($request, $id)
     {
         //토큰 확인
@@ -35,30 +56,5 @@ class RankController extends Controller
         return response()->json([
             'status' => 'success'
             ], 200);    
-    }
-    public function store(Request $request){
-        
-        $this->validate($request, [
-            'name' => 'required',
-            'fish_name' => 'required',
-            'length' => 'required',
-            'photo' => 'required',
-            'location' => 'required',
-            'created_at' => 'required'
-        ]);
-
-        return Ranking::create([
-            'user_id'=>\Auth::id(),
-            'name' => $request['name'],
-            'fish_name' => $request['fish_name'],
-            'length' => $request['length'],
-            'photo' => $request['photo'],
-            'location' => $request['location'],
-            'created_at' => $request['created_at']
-         ]);
-
-         return response()->json([
-            'status' => 'success'
-            ], 200);
     }
 }
