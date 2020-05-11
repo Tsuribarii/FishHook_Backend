@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Board;
 use App\User;
@@ -27,12 +28,15 @@ class BoardController extends Controller
     public function index()
     {
         //게시글 리스트 
-        $board =  Board::latest()->paginate(10);
-
-        // $user = User::where('id',$board->user_id)->first();
-        return response()->json([
-            'boards'=>$board,
-        ]);
+        // $board =  Board::latest()->paginate(10);
+        $board = DB::table('users')
+        ->join('boards','users.id','=','boards.user_id')
+        ->select('boards.id','user_id','tide','title','species','bait',
+            'location','content','hits','sympathy','boards.created_at',
+            'users.name')
+        ->paginate(10);
+        // ->get();
+        return response()->json($board);
     }
 
     /**
