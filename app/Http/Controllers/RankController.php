@@ -47,7 +47,7 @@ class RankController extends Controller
             'created_at' => 'required'
         ]);
 
-        return Ranking::create([
+        return Ranking::store([
             'user_id'=>\Auth::id(),
             'name' => $request['name'],
             'fish_name' => $request['fish_name'],
