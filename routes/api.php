@@ -65,7 +65,7 @@ Route::post('/update/{id}', 'BoardController@update');
 Route::get('/delete/{id}', 'BoardController@destroy');
 
 //날씨 정보
-Route::get('/weather', 'WeatherInformationsController@weather');
+Route::get('/weather/{id}', 'WeatherInformationsController@weather');
 
 //물때 정보
 Route::get('/tide/{id}', 'TideInformationsController@tide');

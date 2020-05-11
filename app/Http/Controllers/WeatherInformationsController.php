@@ -13,9 +13,10 @@ class WeatherInformationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function weather()
+    public function weather($id)
     {
-        $weather = WeatherInformation::all();
+        $tide_location = TideLocation::where('id',$id)->first();
+        $weather = WeatherInformation::where('location',$tide_location->location)->get();
         return response()->json(
             $weather
         );
