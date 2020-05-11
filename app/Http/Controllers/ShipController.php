@@ -29,7 +29,12 @@ class ShipController extends Controller
     //ship리스트
     public function index()
     {
-        $ship =  Ship::latest()->paginate(10);
+        $ship = DB::table('ship_owners')
+        ->join('ships','ship_owners.id','=','ships.owner_id')
+        ->select('ships.id','owner_id','people','cost','name','departure_time','arrival_time','ship_image',
+                'ship_owners.owner_name','location')
+        // ->latest()
+        ->paginate(10);
         return response()->json($ship);
     }
 
@@ -41,7 +46,8 @@ class ShipController extends Controller
         ->where('ships.id',$id)
         ->select('ships.id','owner_id','people','cost','name','departure_time','arrival_time','ship_image',
                 'ship_owners.owner_name','location','business_time','homepage')
-        ->get();
+        ->first();
+
         return response()->json($ship);
     }
 
