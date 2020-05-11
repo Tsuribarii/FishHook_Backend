@@ -36,7 +36,7 @@ class RankController extends Controller
             'status' => 'success'
             ], 200);    
     }
-    public function create(Request $request){
+    public function store(Request $request){
         
         $this->validate($request, [
             'name' => 'required',
@@ -47,7 +47,7 @@ class RankController extends Controller
             'created_at' => 'required'
         ]);
 
-        return Ranking::store([
+        return Ranking::create([
             'user_id'=>\Auth::id(),
             'name' => $request['name'],
             'fish_name' => $request['fish_name'],
