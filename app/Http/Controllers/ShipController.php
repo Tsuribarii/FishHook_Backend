@@ -39,7 +39,7 @@ class ShipController extends Controller
         $ship = DB::table('ship_owners')
         ->join('ships','ship_owners.id','=','ships.owner_id')
         ->where('ships.id',$id)
-        ->select('ships.id','owner_id','people','cost','name','departure_time','arrival_time',
+        ->select('ships.id','owner_id','people','cost','name','departure_time','arrival_time','ship_image',
                 'ship_owners.owner_name','location','business_time','homepage')
         ->get();
         return response()->json($ship);
@@ -61,7 +61,8 @@ class ShipController extends Controller
             'owner_name' => $request['owner_name'],
             'location' => $request['location'],
             'business_time' => $request['business_time'],
-            'homepage' => $request['homepage']
+            'homepage' => $request['homepage'],
+            'ship_image' => $request['ship_image'],
             ]);
 
         $shipowner->save();
@@ -91,7 +92,18 @@ class ShipController extends Controller
             'name' => $request['name'],
             'departure_time' => $request['departure_time'],
             'arrival_time' => $request['arrival_time'],
+            'ship_image' => $request['ship_image'],
             ]);
+
+        //배 이미지
+        if ($request->hasFile('ship_image')) {
+            $image = $request->file('ship_image');
+            $name = $image->getClientOriginalName();
+            $destinationPath = public_path('/images');
+            $imagePath = $destinationPath. "/".  $name;
+            $image->move($destinationPath, $name);
+            $ship->ship_image = $name;
+            }
 
         $ship->save();
 
