@@ -77,3 +77,5 @@ Route::get('/fishing', 'FishingPlacesController@fishing');
 Route::get('/rank', 'RankController@rank');
 Route::delete('/rank/delete/{id}', 'RankController@destroy');
 Route::post('/rank/store', 'RankController@store');
+
+Route::get('/rank/action_test','RankController@action_test');
