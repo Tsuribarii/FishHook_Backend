@@ -82,3 +82,6 @@ Route::delete('/rank/delete/{id}', 'RankController@destroy');
 Route::post('/rank/store', 'RankController@store');
 
 Route::get('/rank/fish_name','RankController@fish_name');
+
+//mqtt
+Route::post('pub', 'MqttController@SendMsgViaMqtt');
