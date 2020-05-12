@@ -65,7 +65,7 @@ Route::post('/update/{id}', 'BoardController@update');
 Route::get('/delete/{id}', 'BoardController@destroy');
 
 //스토어 정보
-Route::get('/store', 'StoreController@store');
+Route::get('/storeshow', 'StoreController@show');
 
 //날씨 정보
 Route::get('/weather/{id}', 'WeatherInformationsController@weather');

@@ -89,16 +89,14 @@ class BoardController extends Controller
      */
     public function show($id)
     {
-        // return $id;
-        
-        //board테이블의 id컬럼에서 $id의 정보를 가져옴
-        $board = Board::where('id',$id)->first();
-        $user = User::where('id',$board->user_id)->first();
+        $board = DB::table('users')
+        ->join('boards','users.id','=','boards.user_id')
+        ->select('boards.id','user_id','tide','title','species','bait',
+            'location','content','hits','sympathy','boards.created_at',
+            'users.name')
+        ->first();
 
-        return response()->json([
-            'user'=>$user,
-            'board'=>$board
-        ]);
+        return response()->json($board);
     }
 
     /**
