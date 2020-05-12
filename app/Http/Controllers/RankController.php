@@ -7,25 +7,28 @@ use App\Ranking;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Log;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 class RankController extends Controller
 {
     public function rank()
     {
-        $rank_of_fish = DB::table('rankings')
-            ->select('rankings.id','name','fish_name', 'length','photo','location','rankings.created_at')
-            ->leftJoin('users', 'rankings.user_id', '=', 'users.id')
-            ->orderBy('rankings.length', 'desc')
-            ->take(10)
-            ->get();
-        return response()->json(
-            $rank_of_fish
-        );
+        // $rank_of_fish = DB::table('rankings')
+        //     ->select('rankings.id','name','fish_name', 'length','photo','location','rankings.created_at')
+        //     ->leftJoin('users', 'rankings.user_id', '=', 'users.id')
+        //     ->orderBy('rankings.length', 'desc')
+        //     ->take(10)
+        //     ->get();
+        // return response()->json(
+        //     $rank_of_fish
+        // );
+        var_dump(Auth::user()); 
     }
-    public function action_test(){
-        $command = escapeshellcmd('C:\Users\PC\jekim\rockfish\rockfish\main.py');
-        $output = shell_exec($command);
-        var_dump($output);
+    public function fish_name() {
+        $result = exec("python C:/Users/PC/jekim/rockfish/rockfish/main.py" . " > /dev/null 2>/dev/null &");
+        $res = json_decode($result, true);
+        var_dump($res);
     }
     public function store(Request $request)
     {
