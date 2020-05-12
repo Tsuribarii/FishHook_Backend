@@ -51,7 +51,7 @@ Route::get('/status', 'MypageController@status');
 //예약
 Route::post('/ownerstore', 'ShipController@ownerstore');
 Route::post('/shipstore', 'ShipController@shipstore');
-Route::post('/rentalstore', 'ShipController@rentalstore');
+Route::post('/rentalstore', 'ShipController@rentalStore');
 Route::get('/shiplist', 'ShipController@index');
 Route::get('/shipshow/{id}', 'ShipController@shipshow');
 
@@ -65,7 +65,7 @@ Route::post('/update/{id}', 'BoardController@update');
 Route::get('/delete/{id}', 'BoardController@destroy');
 
 //스토어 정보
-Route::get('/storeshow', 'StoreController@show');
+Route::post('/storeshow', 'StoreController@show');
 
 //날씨 정보
 Route::get('/weather', 'WeatherInformationsController@weather');
