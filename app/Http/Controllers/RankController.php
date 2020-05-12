@@ -26,9 +26,8 @@ class RankController extends Controller
         var_dump(Auth::user()); 
     }
     public function fish_name() {
-        $result = exec("python C:/Users/PC/jekim/rockfish/rockfish/main.py" . " > /dev/null 2>/dev/null &");
-        $res = json_decode($result, true);
-        var_dump($res);
+        $output = shell_exec("python C:/Users/PC/jekim/rockfish/rockfish/main.py");
+        return $output;
     }
     public function store(Request $request)
     {
