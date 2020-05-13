@@ -7,7 +7,7 @@ use App\Ranking;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Contracts\Filesystem\Filesystem;
 
 class RankController extends Controller
 {
@@ -23,6 +23,13 @@ class RankController extends Controller
             $rank_of_fish
         );
     }
+
+    public function uploadFileToS3(Request $request)
+    {
+        $path = $request->file('image')->store('images','s3');
+        Storage::disk('s3')->setVisibility($path, 'private');
+    }
+
     public function fish_name() {
         $output = shell_exec("python C:/Users/PC/jekim/rockfish/rockfish/main.py");
         $a = strpos($output, '"');
