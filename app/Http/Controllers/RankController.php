@@ -32,7 +32,6 @@ class RankController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'fish_name' => 'required',
             'length'    => 'required',
             'photo'     => 'required',
             'location'  => 'required'
