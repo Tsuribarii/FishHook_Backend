@@ -102,14 +102,14 @@ class ShipController extends Controller
             ]);
 
         //배 이미지
-        if ($request->hasFile('ship_image')) {
-            $image = $request->file('ship_image');
-            $name = $image->getClientOriginalName();
-            $destinationPath = ('https://awsfishhook.s3.ap-northeast-2.amazonaws.com');
-            $imagePath = $destinationPath. "/".  $name;
-            $image->move($destinationPath, $name);
-            $ship->ship_image = $name;
-            }
+        // if ($request->hasFile('ship_image')) {
+            // $image = $request->file('ship_image');
+            // $name = $image->getClientOriginalName();
+            $destinationPath = "https://awsfishhook.s3.ap-northeast-2.amazonaws.com/ship1.jpg";
+            // $imagePath = $destinationPath;
+            // $image->move($destinationPath, $name);
+            $ship->ship_image = $destinationPath;
+            // }
 
         $ship->save();
 
