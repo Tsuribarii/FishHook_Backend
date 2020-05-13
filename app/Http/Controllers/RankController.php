@@ -8,8 +8,7 @@ use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Symfony\Component\Process\Process;
-use Symfony\Component\Process\Exception\ProcessFailedException;
+
 class RankController extends Controller
 {
     public function rank()
@@ -26,7 +25,9 @@ class RankController extends Controller
     }
     public function fish_name() {
         $output = shell_exec("python C:/Users/PC/jekim/rockfish/rockfish/main.py");
-        return $output;
+        $a = strpos($output, '"');
+        $result = substr($output,$a+1,-2);
+        return $result;
     }
     public function store(Request $request)
     {
@@ -36,10 +37,10 @@ class RankController extends Controller
             'photo'     => 'required',
             'location'  => 'required'
         ]);
-
+        $fish_name = $this -> fish_name();
         $ranking = new Ranking([
             'user_id'   => auth()->id(),
-            'fish_name' => $request->get('fish_name'),
+            'fish_name' => $fish_name,
             'length'    => $request->get('length'),
             'photo'     => $request->get('photo'),
             'location'  => $request->get('location')
