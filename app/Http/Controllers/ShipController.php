@@ -105,12 +105,12 @@ class ShipController extends Controller
         // if ($request->hasFile('ship_image')) {
             // $image = $request->file('ship_image');
             // $name = $image->getClientOriginalName();
-            $destinationPath = "https://awsfishhook.s3.ap-northeast-2.amazonaws.com/ship1.jpg";
+            // $destinationPath = "https://awsfishhook.s3.ap-northeast-2.amazonaws.com/ship1.jpg";
             // $imagePath = $destinationPath;
             // $image->move($destinationPath, $name);
-            $ship->ship_image = $destinationPath;
+            // $ship->ship_image = $destinationPath;
             // }
-
+            // var_dump($destiationPath);
         $ship->save();
 
         return response()->json([
