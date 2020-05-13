@@ -105,7 +105,7 @@ class ShipController extends Controller
         if ($request->hasFile('ship_image')) {
             $image = $request->file('ship_image');
             $name = $image->getClientOriginalName();
-            $destinationPath = public_path('/images');
+            $destinationPath = ('/var/www/html/FishHook_Back/public/images');
             $imagePath = $destinationPath. "/".  $name;
             $image->move($destinationPath, $name);
             $ship->ship_image = $name;

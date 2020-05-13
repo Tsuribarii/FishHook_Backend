@@ -51,8 +51,8 @@ class StoreController extends Controller
             $newnode->setAttribute("longitude", $query[$i]->longitude);
             $newnode->setAttribute("distance", $query[$i]->distance);
         }
-        
-        // return response()->$dom->saveXML()
+        // dd($newnode);
+        return $dom->saveXML();
             // ->header("Content-type: text/xml; charset=euc-kr");
     }
 

@@ -27,6 +27,13 @@ Route::group(['middleware' => 'cors'], function () {
     Route::post('auth/register', 'AuthController@register');
     Route::post('auth/login', 'AuthController@login'); 
     Route::get('auth/profile', 'AuthController@getAuthenticatedUser');
+
+    //예약
+    Route::post('/ownerstore', 'ShipController@ownerstore');
+    Route::post('/shipstore', 'ShipController@shipstore');
+    Route::post('/rentalstore', 'ShipController@rentalStore');
+    Route::get('/shiplist', 'ShipController@index');
+    Route::get('/shipshow/{id}', 'ShipController@shipshow');
     
 });
 
@@ -47,13 +54,6 @@ Route::get('/myedit', 'MypageController@edit');
 Route::post('/myupdate', 'MypageController@update');
 Route::get('/mycheck', 'MypageController@checkshow');
 Route::get('/status', 'MypageController@status');
-
-//예약
-Route::post('/ownerstore', 'ShipController@ownerstore');
-Route::post('/shipstore', 'ShipController@shipstore');
-Route::post('/rentalstore', 'ShipController@rentalStore');
-Route::get('/shiplist', 'ShipController@index');
-Route::get('/shipshow/{id}', 'ShipController@shipshow');
 
 //커뮤니티
 Route::get('/list', 'BoardController@index')->name('list');
