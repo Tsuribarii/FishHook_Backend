@@ -14,16 +14,15 @@ class RankController extends Controller
 {
     public function rank()
     {
-        // $rank_of_fish = DB::table('rankings')
-        //     ->select('rankings.id','name','fish_name', 'length','photo','location','rankings.created_at')
-        //     ->leftJoin('users', 'rankings.user_id', '=', 'users.id')
-        //     ->orderBy('rankings.length', 'desc')
-        //     ->take(10)
-        //     ->get();
-        // return response()->json(
-        //     $rank_of_fish
-        // );
-        var_dump(Auth::user()); 
+        $rank_of_fish = DB::table('rankings')
+            ->select('rankings.id','name','fish_name', 'length','photo','location','rankings.created_at')
+            ->leftJoin('users', 'rankings.user_id', '=', 'users.id')
+            ->orderBy('rankings.length', 'desc')
+            ->take(10)
+            ->get();
+        return response()->json(
+            $rank_of_fish
+        );
     }
     public function fish_name() {
         $output = shell_exec("python C:/Users/PC/jekim/rockfish/rockfish/main.py");
