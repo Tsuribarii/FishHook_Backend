@@ -235,6 +235,7 @@ return [
         'Mqtt' => \Salman\Mqtt\Facades\Mqtt::class,
         'Input' => Illuminate\Support\Facades\Input::class,
 
+
     ],
 
 ];
