@@ -89,12 +89,14 @@ class BoardController extends Controller
      */
     public function show($id)
     {
-        $board = DB::table('users')
-        ->join('boards','users.id','=','boards.user_id')
-        ->select('boards.id','user_id','tide','title','species','bait',
-            'location','content','hits','sympathy','boards.created_at',
-            'users.name')
-        ->first();
+        // $board = Board::find($id);
+        $board = DB::table('boards')
+            ->join('users','boards.user_id','=','users.id')
+            ->select('boards.id','user_id','tide','title','species','bait',
+                'location','content','hits','sympathy','boards.created_at',
+                'users.name')
+            ->where('boards.id',$id)
+            ->first();
 
         return response()->json($board);
     }
