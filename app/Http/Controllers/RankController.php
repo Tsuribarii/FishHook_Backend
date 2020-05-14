@@ -53,7 +53,7 @@ class RankController extends Controller
         // $url = "https://s3.ap-northeast-2.amazonaws.com/awsfishhook/".$imageFileName;
         // $fish_name = $this -> fish_name();
         $input = Request::input();
-        if($input hasFile($uploadName)) {
+        if($input) {
             $uploadFile = $request::file($uploadName);
             if(is_array($uploadFile)) {
                 foreach($uploadFile as $file) {
