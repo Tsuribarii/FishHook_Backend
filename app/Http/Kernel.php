@@ -53,7 +53,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'cors'=> \ App \ Http \ Middleware \ Cors :: class,
+        // 'cors'=> \ App \ Http \ Middleware \ Cors :: class,
         'jwt.auth'=> \ Tymon \ JWTAuth \ Middleware \ GetUserFromToken :: class, 
         'jwt.refresh'=> \ Tymon \ JWTAuth \ Middleware \ RefreshToken :: class, 
         'auth' => \App\Http\Middleware\Authenticate::class,
