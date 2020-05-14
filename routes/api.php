@@ -80,8 +80,6 @@ Route::get('/fishing', 'FishingPlacesController@fishing');
 Route::get('/rank', 'RankController@rank');
 Route::delete('/rank/delete/{id}', 'RankController@destroy');
 Route::post('/rank/store', 'RankController@store');
-//s3
-Route::post('/rank/upload', 'RankController@uploadFileToS3');
 
 Route::get('/rank/fish_name','RankController@fish_name');
 
