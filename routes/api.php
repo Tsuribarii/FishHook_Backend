@@ -34,6 +34,7 @@ Route::group(['middleware' => 'cors'], function () {
     Route::post('/rentalstore', 'ShipController@rentalStore');
     Route::get('/shiplist', 'ShipController@index');
     Route::get('/shipshow/{id}', 'ShipController@shipshow');
+    Route::post('/confirm', 'ShipController@Confirm');
     
 });
 
