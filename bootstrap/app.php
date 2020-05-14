@@ -1,6 +1,6 @@
 <?php
 
-$app->register(Fruitcake\Cors\CorsServiceProvider::class);
+// $app->register(Fruitcake\Cors\CorsServiceProvider::class);
 
 // $app->configure('cors');
 
