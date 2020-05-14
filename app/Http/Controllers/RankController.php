@@ -24,12 +24,6 @@ class RankController extends Controller
         );
     }
 
-    public function uploadFileToS3(Request $request)
-    {
-        $path = $request->file('image')->store('images','s3');
-        Storage::disk('s3')->setVisibility($path, 'private');
-    }
-
     public function fish_name() {
         $output = shell_exec("python C:/Users/PC/jekim/rockfish/rockfish/main.py");
         $a = strpos($output, '"');
@@ -40,15 +34,19 @@ class RankController extends Controller
     {
         $request->validate([
             'length'    => 'required',
-            'photo'     => 'required',
             'location'  => 'required'
         ]);
+
+        $path = $request->file('image')->store('images','s3');
+        Storage::disk('s3')->setVisibility($path, 'private');
+
         $fish_name = $this -> fish_name();
+
         $ranking = new Ranking([
             'user_id'   => auth()->id(),
             'fish_name' => $fish_name,
             'length'    => $request->get('length'),
-            'photo'     => $request->get('photo'),
+            'photo'     => Storage::disk('s3')->url($path),
             'location'  => $request->get('location')
         ]);
         $ranking->save();
