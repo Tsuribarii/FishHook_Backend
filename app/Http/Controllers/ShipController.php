@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Log;
-// use Auth;
+use Auth;
 use App\User;
 use App\ShipRental;
 use App\Ship;
 use App\ShipOwner;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use Illuminate\Support\Facades\Auth;
+// use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 // use App\Http\Controllers\DB;
 
 class ShipController extends Controller
@@ -124,13 +125,15 @@ class ShipController extends Controller
     public function rentalStore(Request $request)
     {
         \Log::debug($request);
+
         $this->validate($request, [
             'departure_date' => 'required',
             'number_of_people' => 'required',
         ]);
-
+        $user = JWTAuth::parseToken()->authenticate();
+        // return $user->id;
         $rental = new ShipRental([
-            'user_id'=>Auth::id(),
+            'user_id'=>$user->id,
             'ship_id' => $request['ship_id'],
             'departure_date' => $request['departure_date'],
             'number_of_people' => $request['number_of_people']
@@ -141,5 +144,15 @@ class ShipController extends Controller
         return response()->json([
             'status' => 'success',
         ]);
+    }
+
+    public function Confirm(Request $request)
+    {
+        $user_id = $request->user_id;
+
+        // 예약된 유저의 confirm 1로 바꿈
+        DB::table('ship_rentals')
+            ->where('user_id', $user_id)
+            ->update(array('confirm' => '1'));
     }
 }
