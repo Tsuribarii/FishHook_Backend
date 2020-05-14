@@ -5,6 +5,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\FishingPlace;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class FishingPlacesController extends Controller
 {
@@ -30,11 +33,18 @@ class FishingPlacesController extends Controller
             // 변환값 푸시
             array_push($array, $data);
         }
+        $items = $this->paginate($array);
 
         return response()->json(
-            $array
+            $items
         );
     }
+    public function paginate($items, $perPage = 30, $page = null, $options = []) { 
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1); 
+        $items = $items instanceof Collection ? $items : Collection::make($items); 
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options); 
+    }
+
     public function fishing_json()
     {
         //json 가져오기
