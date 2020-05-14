@@ -34,7 +34,7 @@ class ShipController extends Controller
         ->select('ships.id','owner_id','people','cost','name','departure_time','arrival_time','ship_image',
                 'ship_owners.owner_name','location')
         // ->latest()
-        ->paginate(10);
+        ->paginate(6);
         return response()->json($ship);
     }
 
