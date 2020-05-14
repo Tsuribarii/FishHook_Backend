@@ -52,7 +52,7 @@ class RankController extends Controller
         // $s3->put($filePath, file_get_contents($image), 'public');
         // $url = "https://s3.ap-northeast-2.amazonaws.com/awsfishhook/".$imageFileName;
         // $fish_name = $this -> fish_name();
-        $input = Request::input();
+        $input = $request->all();
         if($input) {
             $uploadFile = $request::file($uploadName);
             if(is_array($uploadFile)) {
