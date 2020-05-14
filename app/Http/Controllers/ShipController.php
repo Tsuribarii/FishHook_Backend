@@ -128,7 +128,7 @@ class ShipController extends Controller
         ]);
 
         $rental = new ShipRental([
-            'user_id'=>Auth::id(),
+            'user_id'=>Auth::user()->id,
             'ship_id' => $request['ship_id'],
             'departure_date' => $request['departure_date'],
             'number_of_people' => $request['number_of_people']
