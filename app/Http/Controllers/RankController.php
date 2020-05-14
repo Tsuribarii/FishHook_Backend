@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Validate;
 
 class RankController extends Controller
 {
@@ -78,9 +78,9 @@ class RankController extends Controller
                 $url = $s3URL.$uploadFolder.$tempFileName;
             }
         }
-
+        $user = JWTAuth::parseToken()->authenticate();
         $ranking = new Ranking([
-            'user_id'   => auth()->id(),
+            'user_id'   => $user->id,
             'fish_name' => $fish_name,
             'length'    => $request->get('length'),
             'photo'     => $url,
