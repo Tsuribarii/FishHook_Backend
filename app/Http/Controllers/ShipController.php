@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Log;
-use Auth;
+// use Auth;
 use App\User;
 use App\ShipRental;
 use App\Ship;
 use App\ShipOwner;
 use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Auth;
 // use App\Http\Controllers\DB;
 
 class ShipController extends Controller
@@ -34,7 +36,7 @@ class ShipController extends Controller
         ->select('ships.id','owner_id','people','cost','name','departure_time','arrival_time','ship_image',
                 'ship_owners.owner_name','location')
         // ->latest()
-        ->paginate(6);
+        ->paginate(3);
         return response()->json($ship);
     }
 
@@ -128,7 +130,7 @@ class ShipController extends Controller
         ]);
 
         $rental = new ShipRental([
-            'user_id'=>Auth::user()->id,
+            'user_id'=>Auth::id(),
             'ship_id' => $request['ship_id'],
             'departure_date' => $request['departure_date'],
             'number_of_people' => $request['number_of_people']
