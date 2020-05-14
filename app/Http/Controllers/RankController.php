@@ -42,14 +42,41 @@ class RankController extends Controller
 
         // $path = $request->file('image')->store('images','s3');
         // Storage::disk('s3')->setVisibility($path, 'private');
-        
-        $image = $request->file('image');
-        $imageFileName = time() . '.' . $image->getClientOriginalExtension();
-        $s3 = \Storage::disk('s3');
-        $filePath = '/awsfishhook/' . $imageFileName;
-        $s3->put($filePath, file_get_contents($image), 'public');
-        $url = "https://s3.ap-northeast-2.amazonaws.com/awsfishhook/".$imageFileName;
-        $fish_name = $this -> fish_name();
+        // var_dump($request);
+        // echo "pf";
+        // $image = $request->file('image');
+        // $imageFileName = time() . '.' . $image->getClientOriginalExtension();
+        // $s3 = \Storage::disk('s3');
+        // $filePath = '/awsfishhook/' . $imageFileName;
+        // $s3->put($filePath, file_get_contents($image), 'public');
+        // $url = "https://s3.ap-northeast-2.amazonaws.com/awsfishhook/".$imageFileName;
+        // $fish_name = $this -> fish_name();
+            
+        if(Input::hasFile($uploadName)) {
+            $uploadFile = $request::file($uploadName);
+            if(is_array($uploadFile)) {
+                foreach($uploadFile as $file) {
+                    $url = "";
+                    $now = date("Y-m-d H:i:s");
+                    $tempFileName = $uuidLibrary->createUUID();
+                    $fileSize = $file->getClientSize();
+                    $fileRealName = $file->getClientOriginalName();
+                    $fileExtension = $file->getClientOriginalExtension();
+                    $filePath = Storage::disk('s3')->put($uploadFolder.$tempFileName,file_get_contents($file),'public');
+                    $url = $s3URL.'/'.$uploadFolder.$tempFileName;
+                }
+
+            } else {
+                $url = "";
+                $now = date("Y-m-d H:i:s");
+                $tempFileName = $uuidLibrary->createUUID();
+                $fileSize = $request::file($uploadName)->getClientSize();
+                $fileRealName = $request::file($uploadName)->getClientOriginalName();
+                $fileExtension = $request::file($uploadName)->getClientOriginalExtension();
+                $filePath = Storage::disk('s3')->put($uploadFolder.$tempFileName,file_get_contents($request::file($uploadName)),'public');
+                $url = $s3URL.$uploadFolder.$tempFileName;
+            }
+        }
 
         $ranking = new Ranking([
             'user_id'   => auth()->id(),
