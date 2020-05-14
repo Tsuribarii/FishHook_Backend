@@ -18,7 +18,7 @@ class RankController extends Controller
             ->leftJoin('users', 'rankings.user_id', '=', 'users.id')
             ->orderBy('rankings.length', 'desc')
             ->take(10)
-            ->get();
+            ->paginate(4);
         return response()->json(
             $rank_of_fish
         );
