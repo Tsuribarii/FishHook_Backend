@@ -51,6 +51,7 @@ class FishingPlacesController extends Controller
         $path = '/home/ubuntu/python/FishHook_FishingSpot/FishingSpot.json';
         // $path = 'C:\Users\PC\jekim\FishHook_Back\storage\fishing.json';
         $datas = json_decode(file_get_contents($path), true);
+        
         // key, value 지정
         $json = [];         
         for ($i=0; $i < count($datas); $i++) {
