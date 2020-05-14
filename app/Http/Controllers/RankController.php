@@ -11,6 +11,9 @@ use Illuminate\Contracts\Filesystem\Filesystem;
 
 class RankController extends Controller
 {
+    public function create(){
+        return view('images.create');
+    }
     public function rank()
     {
         $rank_of_fish = DB::table('rankings')
@@ -37,16 +40,22 @@ class RankController extends Controller
             'location'  => 'required'
         ]);
 
-        $path = $request->file('image')->store('images','s3');
-        Storage::disk('s3')->setVisibility($path, 'private');
-
+        // $path = $request->file('image')->store('images','s3');
+        // Storage::disk('s3')->setVisibility($path, 'private');
+        
+        $image = $request->file('image');
+        $imageFileName = time() . '.' . $image->getClientOriginalExtension();
+        $s3 = \Storage::disk('s3');
+        $filePath = '/awsfishhook/' . $imageFileName;
+        $s3->put($filePath, file_get_contents($image), 'public');
+        $url = "https://s3.ap-northeast-2.amazonaws.com/awsfishhook/".$imageFileName;
         $fish_name = $this -> fish_name();
 
         $ranking = new Ranking([
             'user_id'   => auth()->id(),
             'fish_name' => $fish_name,
             'length'    => $request->get('length'),
-            'photo'     => Storage::disk('s3')->url($path),
+            'photo'     => $url,
             'location'  => $request->get('location')
         ]);
         $ranking->save();
