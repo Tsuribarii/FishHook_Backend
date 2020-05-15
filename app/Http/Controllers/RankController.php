@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
+use Request;
 use App\Ranking;
 use App\User;
 use Illuminate\Support\Facades\DB;
