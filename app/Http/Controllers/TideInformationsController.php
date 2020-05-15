@@ -51,8 +51,8 @@ class TideInformationsController extends Controller
         array_push($json, $kk);
         }
         $path1 = '/home/ubuntu/python/FishHook_Weather/weather.json';
-        $json = trim(file_get_contents($path1), "\xEF\xBB\xBF");
-        $datas = json_decode($json, true);  
+        $json1 = trim(file_get_contents($path1), "\xEF\xBB\xBF");
+        $datas = json_decode($json1, true);  
         // key, value 지정
         $weather = [];
         for ($i=0; $i < count((is_countable($datas) ? $datas : [])); $i++) {

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use Request;
+use Illuminate\Http\Request;
 use App\Ranking;
 use Storage;
 use App\User;
@@ -14,6 +14,11 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 
 class RankController extends Controller
 {
+    protected $request;
+
+    public function __construct(Request $request) {
+        $this->request = $request;
+    }
     public function create(){
         return view('images.create');
     }
@@ -38,58 +43,34 @@ class RankController extends Controller
     }
     public function store(Request $request)
     {
-
-        if($request->hasfile('image'))
-         {
-            $file = $request->file('image');
-            $name=time().$file->getClientOriginalName();
-            $filePath = 'images/' . $name;
-            Storage::disk('s3')->put($filePath, file_get_contents($file));
-            $url = "https://s3.ap-northeast-2.amazonaws.com/awsfishhook/".$name;
-         }
-        // $path = $request->file('image')->store('images','s3');
+        // if($request)
+        //  {
+        //     $file = $request->input('image');
+        //     $filePath = 'images/' . $file;
+        //     Storage::disk('s3')->put($filePath, file_get_contents($file));
+        //     $url = "https://s3.ap-northeast-2.amazonaws.com/awsfishhook/".$file;
+        //  }
+        // $path = $request->input('image')->store('images','s3');
         // Storage::disk('s3')->setVisibility($path, 'private');
-        // var_dump($request);
-        // echo "pf";
         // $image = $request->file('image');
         // $imageFileName = time() . '.' . $image->getClientOriginalExtension();
         // $s3 = \Storage::disk('s3');
         // $filePath = '/awsfishhook/' . $imageFileName;
         // $s3->put($filePath, file_get_contents($image), 'public');
         // $url = "https://s3.ap-northeast-2.amazonaws.com/awsfishhook/".$imageFileName;
-        // $fish_name = $this -> fish_name();
-        // $input = $request->all();
-        // if($input) {
-        //     $uploadFile = $request::file($uploadName);
-        //     if(is_array($uploadFile)) {
-        //         foreach($uploadFile as $file) {
-        //             $url = "";
-        //             $now = date("Y-m-d H:i:s");
-        //             $tempFileName = $uuidLibrary->createUUID();
-        //             $fileSize = $file->getClientSize();
-        //             $fileRealName = $file->getClientOriginalName();
-        //             $fileExtension = $file->getClientOriginalExtension();
-        //             $filePath = Storage::disk('s3')->put($uploadFolder.$tempFileName,file_get_contents($file),'public');
-        //             $url = $s3URL.'/'.$uploadFolder.$tempFileName;
-        //         }
+        // 
+        $file = $this->request->input('image');
+        $filePath = "https://s3.ap-northeast-2.amazonaws.com/awsfishhook/".$file;
+        $s3 = \Storage::disk('s3');
+        $s3->put($filePath);
 
-        //     } else {
-        //         $url = "";
-        //         $now = date("Y-m-d H:i:s");
-        //         $tempFileName = $uuidLibrary->createUUID();
-        //         $fileSize = $request::file($uploadName)->getClientSize();
-        //         $fileRealName = $request::file($uploadName)->getClientOriginalName();
-        //         $fileExtension = $request::file($uploadName)->getClientOriginalExtension();
-        //         $filePath = Storage::disk('s3')->put($uploadFolder.$tempFileName,file_get_contents($request::file($uploadName)),'public');
-        //         $url = $s3URL.$uploadFolder.$tempFileName;
-        //     }
-        // }
+        $fish_name = $this -> fish_name();
         $user = JWTAuth::parseToken()->authenticate();
         $ranking = new Ranking([
             'user_id'   => $user->id,
             'fish_name' => $fish_name,
             'length'    => $request->get('length'),
-            'photo'     => $url,
+            'photo'     => $filePath,
             'location'  => $request->get('location')
         ]);
         $ranking->save();
