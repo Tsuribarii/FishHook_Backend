@@ -148,11 +148,15 @@ class ShipController extends Controller
 
     public function Confirm(Request $request)
     {
-        $user_id = $request->user_id;
+        $rental_id = $request->id;
 
         // 예약된 유저의 confirm 1로 바꿈
         DB::table('ship_rentals')
-            ->where('user_id', $user_id)
+            ->where('id', $rental_id)
             ->update(array('confirm' => '1'));
+
+            return response()->json([
+                'status' => 'success',
+            ]);
     }
 }
