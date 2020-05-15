@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Request;
 use App\Ranking;
+use Storage;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -37,7 +38,7 @@ class RankController extends Controller
     }
     public function store(Request $request)
     {
-        
+
         if($request->hasfile('image'))
          {
             $file = $request->file('image');
