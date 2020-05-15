@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Validate;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class RankController extends Controller
 {
@@ -36,7 +37,7 @@ class RankController extends Controller
     }
     public function store(Request $request)
     {
-        $request->validate([
+        $this->validate([
             'length'    => 'required',
             'location'  => 'required'
         ]);
