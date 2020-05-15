@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use Request;
+use Illuminate\Http\Request;
 use App\Ranking;
 use App\User;
 use Illuminate\Support\Facades\DB;
@@ -37,7 +37,7 @@ class RankController extends Controller
     }
     public function store(Request $request)
     {
-        $this->validate([
+        $this->validate($request, [
             'length'    => 'required',
             'location'  => 'required'
         ]);
