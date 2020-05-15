@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\DB;
 // use App\Http\Controllers\DB;
 use App\User;
@@ -71,10 +72,10 @@ class MypageController extends Controller
 
     public function checkshow()
     {
-        //대여자의 예약현황 (예약정보, 유저정보)
+        //판매자의 예약현황 (예약정보, 유저정보)
         if(Auth::user()->roles=='2'){
             
-            // $ship_id = ShipOwner::where('user_id',Auth::id())->first()->ships->first()->id;
+            // ship 테이블에서 ship_id 데려옴
             $ship_id = DB::table('ship_owners')
                 ->join('ships','ship_owners.id','=','ships.owner_id')
                 ->where('ship_owners.user_id',Auth::id())
@@ -90,8 +91,10 @@ class MypageController extends Controller
 
             $rental = DB::table('ship_rentals')
                 ->whereIn('ship_id',$plucked)
+                //승인된 선박만
+                ->where('ship_rentals.confirm',1)
                 ->join('users','ship_rentals.user_id','=','users.id')
-                ->select('ship_rentals.id','ship_id','departure_date','number_of_people','ship_rentals.created_at','users.id','users.name')
+                ->select('ship_rentals.id','ship_id','departure_date','number_of_people','ship_rentals.created_at','users.name')
                 ->get();
             
             return response()->json($rental);
@@ -101,10 +104,12 @@ class MypageController extends Controller
 
             $rental = DB::table('ships')
                 ->where('ship_rentals.user_id',Auth::id())
+                //승인된 선박만
+                ->where('ship_rentals.confirm',1)
                 ->join('ship_rentals','ships.id','=','ship_rentals.ship_id')
                 ->join('ship_owners','ships.owner_id','=','ship_owners.id')
                 ->select('ship_rentals.id','ship_id','departure_date','number_of_people','cancel',
-                         'ship_rentals.created_at','ships.id','ships.name','ships.departure_time','ships.cost','ship_owners.owner_name')
+                         'ship_rentals.created_at','ships.name','ships.departure_time','ships.cost','ship_owners.owner_name')
                 ->get();
 
             $timenow = date("Y-m-d");

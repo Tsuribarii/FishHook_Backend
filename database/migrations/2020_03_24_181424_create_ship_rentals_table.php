@@ -22,7 +22,8 @@ class CreateShipRentalsTable extends Migration
             $table->unsignedBigInteger('ship_id')->comment("배 번호");
             $table->foreign('ship_id')->references('id')->on('ships')->onDelete('cascade');
             
-            $table->integer('cancel')->default(0)->comment("취소여부");
+            $table->integer('cancel')->default(0)->comment("취소 여부");
+            $table->integer('confirm')->default(0)->comment("승인 여부");
             $table->date('departure_date')->comment("출항날짜");
             $table->integer('number_of_people')->comment("사용자 인원");
             $table->timestamps();
