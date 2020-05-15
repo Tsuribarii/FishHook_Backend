@@ -37,11 +37,7 @@ class RankController extends Controller
     }
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'photo'     => 'required',
-            'length'    => 'required',
-            'location'  => 'required'
-        ]);
+        
         if($request->hasfile('image'))
          {
             $file = $request->file('image');
