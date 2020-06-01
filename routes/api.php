@@ -80,9 +80,11 @@ Route::get('/fishing', 'FishingPlacesController@fishing');
 //랭킹 정보
 Route::get('/rank', 'RankController@rank');
 Route::delete('/rank/delete/{id}', 'RankController@destroy');
+Route::post('/image/store', 'ImageController@store');
 Route::post('/rank/store', 'RankController@store');
 
-Route::get('/rank/fish_name','RankController@fish_name');
+
+Route::get('/rank/fish_name','ImageController@fish_name');
 
 //mqtt
 Route::post('pub', 'MqttController@SendMsgViaMqtt');
