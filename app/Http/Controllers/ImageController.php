@@ -31,7 +31,8 @@ class ImageController extends Controller
         return "볼락";
     }
 
-    public function store(Request $request){        
+    public function store(Request $request){  
+        return $request;      
         $this->validate($request, ['image' => 'required|image']);
         if($request->hasfile('image'))
          {
