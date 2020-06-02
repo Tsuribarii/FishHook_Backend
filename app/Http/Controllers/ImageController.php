@@ -33,9 +33,17 @@ class ImageController extends Controller
 
     public function store(Request $request){        
         $this->validate($request, ['image' => 'required|image']);
+        $data = "";
         if($request->hasfile('image'))
          {
-            $file = $request->file('image');
+            $base64_image = $request->file('image');
+
+            if (preg_match('/^data:image\/(\w+);base64,/', $base64_image)) {
+                $data = substr($base64_image, strpos($base64_image, ',') + 1);
+
+                $data = base64_decode($data);
+            }
+            $file =$data;
             $name= $file->getClientOriginalName();
             // $filePath = 'image/' . $name;
             // $url = 'https://awsfishhook.s3.ap-northeast-2.amazonaws.com/' . $filePath;
