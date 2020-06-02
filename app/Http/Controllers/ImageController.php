@@ -31,26 +31,21 @@ class ImageController extends Controller
         return "볼락";
     }
 
-    public function store(Request $request){
+    public function store(Request $request){        
         $this->validate($request, ['image' => 'required|image']);
         if($request->hasfile('image'))
          {
-            $exploded = explode(',', $request->image);
-
-            $decoded = base64_decode($exploded[1]);
-    
-            if(str_contains($exploded[0], 'jpeg')) {
-                $extension = 'jpg';
-            } else {
-                $extension = 'png';
+            $file_data = $request->input('image_file');
+            $file_name = 'image_' . time() . '.png'; //generating unique file name;
+         
+            if ($file_data != "") { // storing image in storage/app/public Folder
+                Storage::disk('public')->put($file_name, base64_decode($file_data));
             }
-    
-            $fileName = str_random().'.'.$extension;
-            $name= $fileName->getClientOriginalName();
+            $name= $file->getClientOriginalName();
             // $filePath = 'image/' . $name;
             // $url = 'https://awsfishhook.s3.ap-northeast-2.amazonaws.com/' . $filePath;
             // Storage::disk('s3')->put($filePath, file_get_contents($file));
-            $path = $fileName->storeAs('image', $name, 's3');
+            $path = $request->file('image')->storeAs('image', $name, 's3');
             $url = Storage::disk('s3')->url($path);
             $imagepath = 'https://awsfishhook.s3.ap-northeast-2.amazonaws.com/image/' .$name;
          }
