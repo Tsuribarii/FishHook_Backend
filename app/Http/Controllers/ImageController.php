@@ -35,13 +35,22 @@ class ImageController extends Controller
         $this->validate($request, ['image' => 'required|image']);
         if($request->hasfile('image'))
          {
-            $file = $request->file('image');
-            var_dump($file);
-            $name= $file->getClientOriginalName();
+            $exploded = explode(',', $request->image);
+
+            $decoded = base64_decode($exploded[1]);
+    
+            if(str_contains($exploded[0], 'jpeg')) {
+                $extension = 'jpg';
+            } else {
+                $extension = 'png';
+            }
+    
+            $fileName = str_random().'.'.$extension;
+            $name= $fileName->getClientOriginalName();
             // $filePath = 'image/' . $name;
             // $url = 'https://awsfishhook.s3.ap-northeast-2.amazonaws.com/' . $filePath;
             // Storage::disk('s3')->put($filePath, file_get_contents($file));
-            $path = $request->file('image')->storeAs('image', $name, 's3');
+            $path = $fileName->storeAs('image', $name, 's3');
             $url = Storage::disk('s3')->url($path);
             $imagepath = 'https://awsfishhook.s3.ap-northeast-2.amazonaws.com/image/' .$name;
          }
