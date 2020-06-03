@@ -46,11 +46,11 @@ class ImageController extends Controller
          }
         //  $fish_name = $this -> fish_name();
         //  $user = JWTAuth::parseToken()->authenticate();
-         Image::create([
+        //  Image::create([
             // 'user_id'   => $user->id,
             // 'fish_name' => $fish_name,
-            'filename'   => $name,
-            'url' => $imagepath
-         ]);
+            // 'filename'   => $name,
+            // 'url' => $imagepath
+        //  ]);
     }
 }
