@@ -35,6 +35,7 @@ Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/shiplist', 'ShipController@index');
     Route::get('/shipshow/{id}', 'ShipController@shipshow');
     Route::post('/confirm', 'ShipController@Confirm');
+    Route::get('/apply', 'MypageController@apply');
     
 // });
 
@@ -68,6 +69,9 @@ Route::get('/delete/{id}', 'BoardController@destroy');
 //스토어 정보
 Route::post('/storeshow', 'StoreController@show');
 
+//어종 길이
+Route::get('/measure', 'MeasureController@action');
+
 //날씨 정보
 Route::get('/weather/{id}', 'WeatherInformationsController@weather');
 
@@ -84,7 +88,7 @@ Route::post('/image/store', 'ImageController@store');
 Route::post('/rank/store', 'RankController@store');
 Route::get('/image', 'ImageController@image');
 Route::get('/fishname', 'ImageController@fish_name');
-// Route::get('/rank/fish_name','RankController@fish_name');
+// Route::get('/rank/fish_name','ImageController@fish_name');
 
 
 Route::get('/rank/fish_name','ImageController@fish_name');
