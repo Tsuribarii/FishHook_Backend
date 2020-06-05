@@ -24,11 +24,12 @@ class ImageController extends Controller
             $img
         );
     }
-    public function fish_name() {
-        $output = shell_exec("python /home/ubuntu/python/rockfish/rockfish/main.py");
+    public function fish_name(Request $request) {
+        $output = shell_exec("python3 /Users/gimjueun/Downloads/python/rockfish/rockfish/main.py");
         $a = strpos($output, '"');
         $result = substr($output,$a+1,-2);
-        return "볼락";
+        return $result;
+        
     }
 
     public function store(Request $request){  
@@ -44,13 +45,13 @@ class ImageController extends Controller
             $url = Storage::disk('s3')->url($path);
             $imagepath = 'https://awsfishhook.s3.ap-northeast-2.amazonaws.com/image/' .$name;
          }
-        //  $fish_name = $this -> fish_name();
-        //  $user = JWTAuth::parseToken()->authenticate();
-        //  Image::create([
-            // 'user_id'   => $user->id,
-            // 'fish_name' => $fish_name,
-            // 'filename'   => $name,
-            // 'url' => $imagepath
-        //  ]);
+         $fish_name = $this -> fish_name();
+         $user = JWTAuth::parseToken()->authenticate();
+         Image::create([
+            'user_id'   => $user->id,
+            'fish_name' => $fish_name,
+            'filename'   => $name,
+            'url' => $imagepath
+         ]);
     }
 }
