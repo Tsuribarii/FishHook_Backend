@@ -25,7 +25,7 @@ class ImageController extends Controller
         );
     }
     public function fish_name(Request $request) {
-        $output = shell_exec("python3 /Users/gimjueun/Downloads/python/rockfish/rockfish/main.py");
+        $output = shell_exec("python3 /home/ubuntu/python/rockfish/main.py");
         $a = strpos($output, '"');
         $result = substr($output,$a+1,-2);
         return $result;
