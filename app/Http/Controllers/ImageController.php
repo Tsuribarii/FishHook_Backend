@@ -25,7 +25,7 @@ class ImageController extends Controller
         );
     }
     public function fish_name(Request $request) {
-        $output = shell_exec("python3 /Users/gimjueun/Downloads/python/rockfish/rockfish/main.py");
+        $output = shell_exec("python3 /home/ubuntu/python/rockfish/main.py");
         $a = strpos($output, '"');
         $result = substr($output,$a+1,-2);
         return $result;
@@ -46,9 +46,9 @@ class ImageController extends Controller
             $imagepath = 'https://awsfishhook.s3.ap-northeast-2.amazonaws.com/image/' .$name;
          }
          $fish_name = $this -> fish_name();
-        //  $user = JWTAuth::parseToken()->authenticate();
+         $user = JWTAuth::parseToken()->authenticate();
          Image::create([
-            // 'user_id'   => $user->id,
+            'user_id'   => $user->id,
             'fish_name' => $fish_name,
             'filename'   => $name,
             'url' => $imagepath
