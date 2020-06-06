@@ -29,7 +29,7 @@ class ImageController extends Controller
         $a = strpos($output, '"');
         $result = substr($output,$a+1,-2);
         return $result;
-        
+        // var_dump($result);
     }
 
     public function store(Request $request){  
@@ -48,7 +48,7 @@ class ImageController extends Controller
          $fish_name = $this -> fish_name();
         //  $user = JWTAuth::parseToken()->authenticate();
          Image::create([
-            // 'user_id'   => $user->id,
+            'user_id'   => $user->id,
             'fish_name' => $fish_name,
             'filename'   => $name,
             'url' => $imagepath
