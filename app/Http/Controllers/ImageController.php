@@ -28,8 +28,8 @@ class ImageController extends Controller
         $output = shell_exec("python3 /home/ubuntu/python/rockfish/main.py");
         $a = strpos($output, '"');
         $result = substr($output,$a+1,-2);
-        return $result;
-        // var_dump($result);
+        // return $result;
+        var_dump($result);
     }
 
     public function store(Request $request){  
