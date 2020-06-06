@@ -29,7 +29,7 @@ class ImageController extends Controller
         $a = strpos($output, '"');
         $result = substr($output,$a+1,-2);
         // return $result;
-        var_dump($result);
+        var_dump($output);
     }
 
     public function store(Request $request){  
