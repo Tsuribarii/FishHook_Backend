@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MeasureController extends Controller
 {
@@ -15,11 +16,11 @@ class MeasureController extends Controller
         //     echo "The file $filename does not exist";
         // }
 
-        $image_path = public_path() . '\images\example_12.png';
         $py_path = public_path(). '\object_size.py';
         $width = 0.955;
-        $result =  shell_exec("python " . $py_path .' --image '. $image_path .' --width '. $width);
-        return $result;
+        $result =  shell_exec("python " . $py_path);
+        // return $result;
+        return response()->json($result);
     }
 
 }
