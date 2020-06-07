@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*- 
 # USAGE
 # python object_size.py --image images/example_01.png --width 0.955
 # python object_size.py --image images/example_02.png --width 0.955
