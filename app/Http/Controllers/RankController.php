@@ -22,7 +22,7 @@ class RankController extends Controller
     public function rank()
     {
         $rank_of_fish = DB::table('rankings')
-            ->select('rankings.id','name','fish_name', 'fish_length','images.url','location','rankings.created_at')
+            ->select('rankings.id','name','fish_name', 'length','images.url','location','rankings.created_at')
             ->leftJoin('users', 'rankings.user_id', '=', 'users.id')
             ->leftJoin('images', 'rankings.user_id', '=', 'images.user_id')
             ->orderBy('rankings.length', 'desc')
@@ -68,7 +68,7 @@ class RankController extends Controller
         $ranking = new Ranking([
             'user_id'   => $user->id,
             'fish_name' => $fish_name,
-            'fish_length' => $fish_length,
+            'length' => $fish_length,
             'location'  => $request->get('location')
         ]);
         $ranking->save();

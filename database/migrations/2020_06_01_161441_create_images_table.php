@@ -17,8 +17,6 @@ class CreateImagesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->comment("회원 번호");
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('fish_name')->comment("어종 이름");
-            $table->string('fish_length')->comment("어종 길이");
             $table->string('filename');
             $table->string('url');
             $table->timestamps();
