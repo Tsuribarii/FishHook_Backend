@@ -69,7 +69,7 @@ class ImageController extends Controller
          }
         //  $user = JWTAuth::parseToken()->authenticate();
          Image::create([
-            'user_id'   => $user->id,
+            'user_id'   => $request->user_id,
             'filename'   => $name,
             'url' => $imagepath
          ]);
