@@ -1,5 +1,5 @@
 <?php
-
+#!/bin/bash
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -27,7 +27,7 @@ class ImageController extends Controller
     //어종분석
     public function fish_name(Request $request) {
     // $output = shell_exec("python3 /home/ubuntu/python/rockfish/main.py 2>&1");
-    $command = escapeshellcmd('home/ubuntu/python/rockfish/main.pyi');
+    $command = escapeshellcmd('home/ubuntu/python/rockfish/main.py 1 > /dev/null 2>&1 &');
     $output = shell_exec($command);
     var_dump($output);
 	#$command = escapeshellcmd('/home/ubuntu/python/rockfish/aa.py');
