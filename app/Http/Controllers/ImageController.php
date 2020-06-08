@@ -26,7 +26,7 @@ class ImageController extends Controller
     }
     //어종분석
     public function fish_name(Request $request) {
-    $output = shell_exec("python3 /home/ubuntu/python/rockfish/main.py 2>&1");
+    $output = shell_exec("python3 /home/ubuntu/python/rockfish/main.py arg1 arg2 etc 2>&1");
     var_dump($output);
 	#$command = escapeshellcmd('/home/ubuntu/python/rockfish/aa.py');
         #$output = Shell_exec($command);
