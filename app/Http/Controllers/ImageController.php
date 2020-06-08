@@ -16,42 +16,13 @@ class ImageController extends Controller
     public function image()
     {
         $img = DB::table('images')
-            ->select('fish_name','filename','fish_length', 'url')
-            ->select('filename', 'fish_length', 'url')
+            ->select('filename', 'url')
             ->leftJoin('users', 'images.user_id', '=', 'users.id')
             ->orderBy('images.created_at', 'desc')
             ->first();
         return response()->json(
             $img
         );
-    }
-    //어종분석
-    public function fish_name(Request $request) {
-        $output = shell_exec("/home/ubuntu/anaconda3/bin/python3 /home/ubuntu/python/rockfish/rlawndms.py 2>&1");
-	#$command = escapeshellcmd('/home/ubuntu/python/rockfish/aa.py');
-        #$output = Shell_exec($command);
-	#$output = shell_exec("python3 --version");    
-	$a = strpos($output, '"');
-        $result = substr($output,$a+1,-2);
-        return $result;
-    // echo $output;
-    }
-    //길이분석
-    public function fish_length(Request $request){
-
-        // $filename = public_path() . '\object_size.py';
-        // if (file_exists($filename)) {
-        //     echo "The file $filename exists";
-        // } else {
-        //     echo "The file $filename does not exist";
-        // }
-        $output = shell_exec("/home/ubuntu/anaconda3/bin/python3 /var/www/html/FishHook_Backend/public/object_size.py  2>&1");
-        return $output;
-        #$py_path = public_path(). '\object_size.py';
-        #$width = 0.955;
-        #$result =  shell_exec("python " . $py_path);
-        // return $result;
-        #return response()->json($result);
     }
 
     public function store(Request $request){  
@@ -67,13 +38,10 @@ class ImageController extends Controller
             $url = Storage::disk('s3')->url($path);
             $imagepath = 'https://awsfishhook.s3.ap-northeast-2.amazonaws.com/image/' .$name;
          }
-         $fish_name = $this -> fish_name();
-         $fish_length = $this -> fish_length();
+
         //  $user = JWTAuth::parseToken()->authenticate();
          Image::create([
             'user_id'   => $request->user_id,
-            'fish_name' => $fish_name,
-            'fish_length' => $fish_length,
             'filename'   => $name,
             'url' => $imagepath
          ]);
