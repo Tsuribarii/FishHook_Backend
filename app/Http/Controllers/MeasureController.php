@@ -18,7 +18,7 @@ class MeasureController extends Controller
 
         $py_path = public_path(). '\object_size.py';
         $width = 0.955;
-        $result =  shell_exec("python " . $py_path);
+        $result =  shell_exec("sudo python3 " . $py_path);
         // return $result;
         return response()->json($result);
     }

@@ -24,12 +24,31 @@ class ImageController extends Controller
             $img
         );
     }
+    //어종분석
     public function fish_name(Request $request) {
-        $output = shell_exec("python3 /home/ubuntu/python/rockfish/main.py");
-        $a = strpos($output, '"');
+			$output = shell_exec("python3 /home/ubuntu/python/rockfish/main.py 2>&1");
+	#$command = escapeshellcmd('/home/ubuntu/python/rockfish/aa.py');
+        #$output = Shell_exec($command);
+	#$output = shell_exec("python3 --version");    
+	$a = strpos($output, '"');
         $result = substr($output,$a+1,-2);
         // return $result;
         var_dump($output);
+    }
+    //길이분석
+    public function action(){
+        // $filename = public_path() . '\object_size.py';
+        // if (file_exists($filename)) {
+        //     echo "The file $filename exists";
+        // } else {
+        //     echo "The file $filename does not exist";
+        // }
+
+        $py_path = public_path(). '\object_size.py';
+        $width = 0.955;
+        $result =  shell_exec("python " . $py_path);
+        // return $result;
+        return response()->json($result);
     }
 
     public function store(Request $request){  

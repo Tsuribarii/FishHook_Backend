@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*- 
 # USAGE
 # python object_size.py --image images/example_01.png --width 0.955
 # python object_size.py --image images/example_02.png --width 0.955
@@ -20,10 +21,8 @@ import os
 
 def midpoint(ptA, ptB):
    return ((ptA[0] + ptB[0]) * 0.5, (ptA[1] + ptB[1]) * 0.5)
-
-# 디비 연결하는 변수 
-conn = pymysql.connect(host='15.165.203.24', user='root', password='jekim123',
-                       db='FishHook_DB', charset='utf8')
+ 
+conn = pymysql.connect(host='15.165.203.24', user='root', password='jekim123',db='FishHook_DB', charset='utf8')
 
 # 디비 연결
 curs = conn.cursor()
@@ -49,10 +48,10 @@ img = Image.open(BytesIO(res.content))
 # img = cv2.imdecode(arr, -1) 
 
 # 이미지 저장
-img.save('fish.jpg')
+img.save('/var/www/html/FishHook_Backend/public/fish.jpg')
 
 # cv에서 지원하는 imread를 사용해서 이미지를 읽어온다.
-image = cv2.imread('fish.jpg')
+image = cv2.imread('/var/www/html/FishHook_Backend/public/fish.jpg')
 
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 gray = cv2.GaussianBlur(gray, (7, 7), 0)
@@ -156,6 +155,6 @@ for c in cnts:
 		a = dimB
 		
 # 저장한 이미지 삭제
-os.remove('./fish.jpg')
+os.remove('/var/www/html/FishHook_Backend/public/fish.jpg')
 
 print(max(a,b))
