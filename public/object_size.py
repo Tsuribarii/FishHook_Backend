@@ -36,8 +36,8 @@ curs.execute(sql)
 # 결과 반환 
 rows = curs.fetchone()
 
-# rows[4] : 칼람의 4번방에 있는 값을 가져온다. 
-url = str(rows[4])
+# rows[4] : 칼람의 3번방에 있는 값을 가져온다. 
+url = str(rows[3])
 
 # 외부 이미지를 http 통신으로 이미지를 불러온다.
 res = requests.get(url)
