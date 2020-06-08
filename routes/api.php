@@ -88,7 +88,7 @@ Route::post('/image/store', 'ImageController@store');
 Route::post('/rank/store', 'RankController@store');
 Route::get('/image', 'ImageController@image');
 Route::get('/fishname', 'ImageController@fish_name');
-Route::get('/rank/fish_name','ImageController@fish_name');
-Route::get('/rank/fish_length','ImageController@fish_length');
+Route::get('/rank/fish_name','RankController@fish_name');
+Route::get('/rank/fish_length','RankController@fish_length');
 //mqtt
 Route::post('pub', 'MqttController@SendMsgViaMqtt');
