@@ -14,6 +14,7 @@ import imutils
 import cv2
 import pymysql
 import requests
+import json
 from PIL import Image
 from io import BytesIO
 from urllib.request import urlopen
@@ -157,4 +158,5 @@ for c in cnts:
 # 저장한 이미지 삭제
 os.remove('/var/www/html/FishHook_Backend/public/fish.jpg')
 
-print(max(a,b))
+# 반올림, max
+print(json.dumps(round(max(a,b),2)))

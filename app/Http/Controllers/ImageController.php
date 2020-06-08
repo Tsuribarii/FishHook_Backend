@@ -27,30 +27,31 @@ class ImageController extends Controller
     }
     //어종분석
     public function fish_name(Request $request) {
-    $output = shell_exec("python3 /home/ubuntu/python/rockfish/main.py 2>&1");
-    var_dump($output);
+        $output = shell_exec("/home/ubuntu/anaconda3/bin/python3 /home/ubuntu/python/rockfish/rlawndms.py 2>&1");
 	#$command = escapeshellcmd('/home/ubuntu/python/rockfish/aa.py');
         #$output = Shell_exec($command);
 	#$output = shell_exec("python3 --version");    
-	// $a = strpos($output, '"');
-    //     $result = substr($output,$a+1,-2);
-        // return $result;
+	$a = strpos($output, '"');
+        $result = substr($output,$a+1,-2);
+        return $result;
     // echo $output;
     }
     //길이분석
-    public function fish_length(){
+    public function fish_length(Request $request){
+
         // $filename = public_path() . '\object_size.py';
         // if (file_exists($filename)) {
         //     echo "The file $filename exists";
         // } else {
         //     echo "The file $filename does not exist";
         // }
-
-        $py_path = public_path(). '\object_size.py';
-        $width = 0.955;
-        $result =  shell_exec("python " . $py_path);
+        $output = shell_exec("/home/ubuntu/anaconda3/bin/python3 /var/www/html/FishHook_Backend/public/object_size.py  2>&1");
+        return $output;
+        #$py_path = public_path(). '\object_size.py';
+        #$width = 0.955;
+        #$result =  shell_exec("python " . $py_path);
         // return $result;
-        return response()->json($result);
+        #return response()->json($result);
     }
 
     public function store(Request $request){  
