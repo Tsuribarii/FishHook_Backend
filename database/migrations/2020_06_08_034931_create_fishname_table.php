@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateImagesTable extends Migration
+class CreateFishnameTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('images', function(Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('fishname', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('user_id')->comment("회원 번호");
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('filename');
-            $table->string('url');
-            $table->timestamps();
+            $table->string('fishname');
         });
     }
 
@@ -30,6 +28,6 @@ class CreateImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('images');
+        Schema::dropIfExists('fishname');
     }
 }

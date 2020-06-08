@@ -22,9 +22,10 @@ class RankController extends Controller
     public function rank()
     {
         $rank_of_fish = DB::table('rankings')
-            ->select('rankings.id','name','images.fish_name', 'length','images.url','location','rankings.created_at')
+            ->select('rankings.id','name','fishname.fish_name', 'length','images.url','location','rankings.created_at')
             ->leftJoin('users', 'rankings.user_id', '=', 'users.id')
             ->leftJoin('images', 'rankings.user_id', '=', 'images.user_id')
+            ->leftJoin('fishname', 'rankings.user_id', '=', 'fishname.user_id')
             ->orderBy('rankings.length', 'desc')
             ->take(10)
             ->paginate(4);
