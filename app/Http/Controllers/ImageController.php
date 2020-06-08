@@ -16,6 +16,7 @@ class ImageController extends Controller
     public function image()
     {
         $img = DB::table('images')
+            ->select('fish_name','filename', 'url')
             ->select('filename', 'url')
             ->leftJoin('users', 'images.user_id', '=', 'users.id')
             ->orderBy('images.created_at', 'desc')
@@ -26,7 +27,7 @@ class ImageController extends Controller
     }
     //어종분석
     public function fish_name(Request $request) {
-    $output = shell_exec("python3 /home/ubuntu/python/rockfish/main.py arg1 arg2 2>&1");
+    $output = shell_exec("python3 /home/ubuntu/python/rockfish/main.py");
     var_dump($output);
 	#$command = escapeshellcmd('/home/ubuntu/python/rockfish/aa.py');
         #$output = Shell_exec($command);
@@ -65,9 +66,11 @@ class ImageController extends Controller
             $url = Storage::disk('s3')->url($path);
             $imagepath = 'https://awsfishhook.s3.ap-northeast-2.amazonaws.com/image/' .$name;
          }
+         $fish_name = $this -> fish_name();
         //  $user = JWTAuth::parseToken()->authenticate();
          Image::create([
             'user_id'   => $request->user_id,
+            'fish_name' => $fish_name,
             'filename'   => $name,
             'url' => $imagepath
          ]);
