@@ -26,14 +26,17 @@ class ImageController extends Controller
     }
     //어종분석
     public function fish_name(Request $request) {
-	$output = shell_exec("python3 /home/ubuntu/python/rockfish/main.py");
+    // $output = shell_exec("python3 /home/ubuntu/python/rockfish/main.py 2>&1");
+    $command = escapeshellcmd('home/ubuntu/python/rockfish/main.pyi');
+    $output = shell_exec($command);
+    echo $output;
 	#$command = escapeshellcmd('/home/ubuntu/python/rockfish/aa.py');
         #$output = Shell_exec($command);
 	#$output = shell_exec("python3 --version");    
 	// $a = strpos($output, '"');
     //     $result = substr($output,$a+1,-2);
         // return $result;
-    echo $output;
+    // echo $output;
     }
     //길이분석
     public function action(){
