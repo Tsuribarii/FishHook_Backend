@@ -16,8 +16,8 @@ class ImageController extends Controller
     public function image()
     {
         $img = DB::table('images')
-            ->select('fish_name','filename', 'url')
-            ->select('filename', 'url')
+            ->select('fish_name','filename','fish_length', 'url')
+            ->select('filename', 'fish_length', 'url')
             ->leftJoin('users', 'images.user_id', '=', 'users.id')
             ->orderBy('images.created_at', 'desc')
             ->first();
@@ -38,7 +38,7 @@ class ImageController extends Controller
     // echo $output;
     }
     //길이분석
-    public function action(){
+    public function fish_length(){
         // $filename = public_path() . '\object_size.py';
         // if (file_exists($filename)) {
         //     echo "The file $filename exists";
@@ -67,10 +67,12 @@ class ImageController extends Controller
             $imagepath = 'https://awsfishhook.s3.ap-northeast-2.amazonaws.com/image/' .$name;
          }
          $fish_name = $this -> fish_name();
+         $fish_length = $this -> fish_length();
         //  $user = JWTAuth::parseToken()->authenticate();
          Image::create([
             'user_id'   => $request->user_id,
             'fish_name' => $fish_name,
+            'fish_length' => $fish_length,
             'filename'   => $name,
             'url' => $imagepath
          ]);
