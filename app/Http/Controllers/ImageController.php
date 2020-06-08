@@ -29,7 +29,7 @@ class ImageController extends Controller
     // $output = shell_exec("python3 /home/ubuntu/python/rockfish/main.py 2>&1");
     $command = escapeshellcmd('home/ubuntu/python/rockfish/main.pyi');
     $output = shell_exec($command);
-    echo $output;
+    var_dump($output);
 	#$command = escapeshellcmd('/home/ubuntu/python/rockfish/aa.py');
         #$output = Shell_exec($command);
 	#$output = shell_exec("python3 --version");    
