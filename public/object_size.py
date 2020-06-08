@@ -157,4 +157,5 @@ for c in cnts:
 # 저장한 이미지 삭제
 os.remove('/var/www/html/FishHook_Backend/public/fish.jpg')
 
-print(max(a,b))
+# 반올림, max
+print(round(max(a,b),2))
