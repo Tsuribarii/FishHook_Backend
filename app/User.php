@@ -94,7 +94,11 @@ class User extends Authenticatable implements JWTsubject
     {
         return $this->hasMany('App\Ranking');
     }
-
+    // 하나의 회원은 여러 랭킹을 가질 수 있다
+    public function images()
+    {
+        return $this->hasMany('App\Image');
+    }
     // 하나의 회원은 여러 영업 장소을 가질 수 있다
     public function fishing_places()
     {
