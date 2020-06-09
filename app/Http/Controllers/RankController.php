@@ -60,16 +60,20 @@ class RankController extends Controller
         // return $result;
         #return response()->json($result);
     }
+    public function location(){
+        return "인천";
+    }
     public function store(Request $request)
     {
         $fish_name = $this -> fish_name();
         $fish_length = $this -> fish_length();
+        $location = $this ->location();
         // $user = JWTAuth::parseToken()->authenticate();
         $ranking = new Ranking([
             'user_id'   => $request->user_id,
             'fish_name' => $fish_name,
             'length' => $fish_length,
-            'location'  => $request->get('location')
+            'location'  => $location
         ]);
         $ranking->save();
         return response()->json(['status' => 'success'], 200);
