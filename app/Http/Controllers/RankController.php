@@ -76,7 +76,12 @@ class RankController extends Controller
             'location'  => $location
         ]);
         $ranking->save();
-        return response()->json(['status' => 'success'], 200);
+        return response()->json([
+            'user_id'   => $request->user_id,
+            'fish_name' => $fish_name,
+            'length' => $fish_length,
+            'location'  => $location
+        ]);
     }
     public function destroy($request, $id)
     {
