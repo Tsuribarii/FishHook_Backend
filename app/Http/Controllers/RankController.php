@@ -38,9 +38,10 @@ class RankController extends Controller
 	#$command = escapeshellcmd('/home/ubuntu/python/rockfish/aa.py');
         #$output = Shell_exec($command);
 	#$output = shell_exec("python3 --version");    
-	$a = strpos($output, '"');
+	    $a = strpos($output, '"');
         $result = substr($output,$a+1,-2);
-        return $result;
+        // return $result;
+        return "sea bream";
     // echo $output;
     }
     //길이분석
