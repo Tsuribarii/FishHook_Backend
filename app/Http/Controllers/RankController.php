@@ -83,9 +83,15 @@ class RankController extends Controller
             'filename'   => $name,
             'url' => $imagepath
          ]);
+         return response()->json([
+            'user_id'   => $request->user_id,
+            'filename'   => $name,
+            'url' => $imagepath
+        ]);
     }
     public function store(Request $request)
     {
+        $image = $this -> image();
         $fish_name = $this -> fish_name();
         $fish_length = $this -> fish_length();
         $location = $this ->location();
