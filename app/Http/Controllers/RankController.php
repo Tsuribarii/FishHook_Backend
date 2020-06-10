@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Ranking;
-use Storage;
+use App\Image;
 use App\User;
+use Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Filesystem\Filesystem;
@@ -62,6 +63,26 @@ class RankController extends Controller
     }
     public function location(){
         return "인천";
+    }
+    public function image(Request $request){  
+        $this->validate($request, ['image' => 'required|image']);
+        if($request->hasfile('image'))
+         {
+            $file = $request->file('image');
+            $name= $file->getClientOriginalName();
+            // $filePath = 'image/' . $name;
+            // $url = 'https://awsfishhook.s3.ap-northeast-2.amazonaws.com/' . $filePath;
+            // Storage::disk('s3')->put($filePath, file_get_contents($file));
+            $path = $request->file('image')->storeAs('image', $name, 's3');
+            $url = Storage::disk('s3')->url($path);
+            $imagepath = 'https://awsfishhook.s3.ap-northeast-2.amazonaws.com/image/' .$name;
+         }
+        //  $user = JWTAuth::parseToken()->authenticate();
+         Image::create([
+            'user_id'   => $request->user_id,
+            'filename'   => $name,
+            'url' => $imagepath
+         ]);
     }
     public function store(Request $request)
     {
