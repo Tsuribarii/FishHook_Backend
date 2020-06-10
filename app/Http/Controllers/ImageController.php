@@ -45,5 +45,10 @@ class ImageController extends Controller
             'filename'   => $name,
             'url' => $imagepath
          ]);
+         return response()->json([
+            'user_id'   => $request->user_id,
+            'filename'   => $name,
+            'url' => $imagepath
+        ]);
     }
 }
