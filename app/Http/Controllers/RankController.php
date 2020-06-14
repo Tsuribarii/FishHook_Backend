@@ -23,7 +23,7 @@ class RankController extends Controller
     public function rank()
     {
         $rank_of_fish = DB::table('rankings')
-            ->select('rankings.id','name','fish_name', 'length','images.url','location','rankings.created_at')
+            ->select('rankings.id','name','fish_name', 'length','rankings.url','location','rankings.created_at')
             ->leftJoin('users', 'rankings.user_id', '=', 'users.id')
             ->leftJoin('images', 'rankings.user_id', '=', 'images.user_id')
             ->orderBy('rankings.length', 'desc')
@@ -83,6 +83,7 @@ class RankController extends Controller
             'filename'   => $name,
             'url' => $imagepath
          ]);
+         return $imagepath;
     }
     public function store(Request $request)
     {
@@ -97,6 +98,7 @@ class RankController extends Controller
             $path = $request->file('image')->storeAs('image', $name, 's3');
             $url = Storage::disk('s3')->url($path);
             $imagepath = 'https://awsfishhook.s3.ap-northeast-2.amazonaws.com/image/' .$name;
+            
          }
         Image::create([
             'user_id'   => $request->user_id,
@@ -106,9 +108,11 @@ class RankController extends Controller
         $fish_name = $this -> fish_name();
         $fish_length = $this -> fish_length();
         $location = $this ->location();
+        $url = $this->image();
         // $user = JWTAuth::parseToken()->authenticate();
         $ranking = new Ranking([
             'user_id'   => $request->user_id,
+            'url' => $url,
             'fish_name' => $fish_name,
             'length' => $fish_length,
             'location'  => $location
@@ -118,6 +122,7 @@ class RankController extends Controller
             'user_id'   => $request->user_id,
             'fish_name' => $fish_name,
             'length' => $fish_length,
+            'url' => $url,
             'location'  => $location
         ]);
     }
