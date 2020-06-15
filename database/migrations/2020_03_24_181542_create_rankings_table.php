@@ -19,6 +19,7 @@ class CreateRankingsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('fish_name')->comment("어종 이름");
             $table->string('length')->comment("길이");
+            $table->string('url')->comment("이미지");
             $table->string('location')->comment("위치");
             $table->timestamps();
         });

@@ -96,7 +96,7 @@ class RankController extends Controller
             'user_id'   => $request->user_id,
             'fish_name' => $fish_name,
             'length' => $fish_length,
-            'url' => $url,
+            'url' => $imagepath,
             'location'  => $location
         ]);
     }
