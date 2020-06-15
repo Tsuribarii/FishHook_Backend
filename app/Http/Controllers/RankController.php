@@ -85,14 +85,13 @@ class RankController extends Controller
         $fish_length = $this -> fish_length();
         $location = $this ->location();
         // $user = JWTAuth::parseToken()->authenticate();
-        $ranking = new Ranking([
+        Ranking::create([
             'user_id'   => $request->user_id,
-            'url' => $imagepath,
             'fish_name' => $fish_name,
             'length' => $fish_length,
+            'url' => $imagepath,
             'location'  => $location
         ]);
-        $ranking->save();
         return response()->json([
             'user_id'   => $request->user_id,
             'fish_name' => $fish_name,
