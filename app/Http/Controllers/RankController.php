@@ -25,7 +25,7 @@ class RankController extends Controller
         $rank_of_fish = DB::table('rankings')
             ->select('rankings.id','name','fish_name', 'length','rankings.url','location','rankings.created_at')
             ->leftJoin('users', 'rankings.user_id', '=', 'users.id')
-            ->orderBy('rankings.length', 'desc')
+            ->orderByRaw('CAST(length as UNSIGNED) DESC')
             ->paginate(4);
         return response()->json(
             $rank_of_fish
