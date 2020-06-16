@@ -167,7 +167,9 @@ class BoardController extends Controller
     public function showcomment($id){
         
         $comment = DB::table('comments')
+        ->join('users','comments.comment_writer_id','=','users.id')
         ->where('comments.post_id',$id)
+        ->select('users.name','comments.content')
         ->get();
 
         return response()->json($comment);
