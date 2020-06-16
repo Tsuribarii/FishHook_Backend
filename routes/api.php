@@ -65,6 +65,8 @@ Route::get('/show/{id}', 'BoardController@show');
 Route::get('/edit/{id}', 'BoardController@edit');
 Route::post('/update/{id}', 'BoardController@update');
 Route::get('/delete/{id}', 'BoardController@destroy');
+Route::get('/showcomment/{id}', 'BoardController@showcomment');
+Route::post('/storecomment', 'BoardController@storecomment');
 
 //스토어 정보
 Route::post('/storeshow', 'StoreController@show');
