@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Board;
+use App\Comment;
 use App\User;
 
 
@@ -161,5 +162,28 @@ class BoardController extends Controller
         return response()->json([
             'status' => 'success'
             ], 200);    
+    }
+
+    public function showcomment($id){
+        
+        $comment = DB::table('comments')
+        ->where('comments.post_id',$id)
+        ->get();
+
+        return response()->json($comment);
+    }
+
+    public function storecomment(Request $request)
+    {
+
+        return Comment::create([
+            'comment_writer_id'=>\Auth::id(),
+            'content' => $request['content'],
+            'post_id' => $request['post_id'],
+         ]);
+
+         return response()->json([
+            'status' => 'success'
+            ], 200);
     }
 }
