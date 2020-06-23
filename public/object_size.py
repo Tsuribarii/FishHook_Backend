@@ -28,7 +28,7 @@ conn = pymysql.connect(host='15.165.203.24', user='root', password='jekim123',db
 # 디비 연결
 curs = conn.cursor()
 # 디비 쿼리 문 => images 테이블에서 마지막에 생성된 값을 가져온다.
-sql = "select * from rankings ORDER BY created_at DESC LIMIT 1"
+sql = "select * from images ORDER BY created_at DESC LIMIT 1"
 # 쿼리문을 서버로 전송 
 curs.execute(sql)
 

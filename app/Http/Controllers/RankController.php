@@ -76,11 +76,10 @@ class RankController extends Controller
             $url = Storage::disk('s3')->url($path);
             $imagepath = 'https://awsfishhook.s3.ap-northeast-2.amazonaws.com/image/' .$name;
          }
-        // Image::create([
-        //     'user_id'   => $request->user_id,
-        //     'filename'   => $name,
-        //     'url' => $imagepath
-        // ]);
+        Image::create([
+            'user_id'   => $request->user_id,
+            'url' => $imagepath
+        ]);
         $fish_name = $this -> fish_name();
         $fish_length = $this -> fish_length();
         $location = $this ->location();
