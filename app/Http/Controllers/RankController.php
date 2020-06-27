@@ -22,15 +22,28 @@ class RankController extends Controller
     }
     public function rank()
     {
-        $rank_of_fish = DB::table('rankings')
+        // $fish = $this->request;
+        // if(! $fish) {
+          $rank_of_fish = DB::table('rankings')
             ->select('rankings.id','name','fish_name', 'length','rankings.url','location','rankings.created_at')
             ->leftJoin('users', 'rankings.user_id', '=', 'users.id')
             ->orderByRaw('CAST(length as UNSIGNED) DESC')
+            // ->addSelect(\DB::raw('@row := @rownum + 1 AS row'))
             ->paginate(4);
-        return response()->json(
-            $rank_of_fish
-        );
-    }
+          return response()->json(
+              $rank_of_fish
+          );
+        }
+        // $rank_of_fish = DB::table('rankings')
+        //     ->select('rankings.id','name','fish_name', 'length','rankings.url','location','rankings.created_at')
+        //     ->leftJoin('users', 'rankings.user_id', '=', 'users.id')
+        //     ->orderByRaw('CAST(length as UNSIGNED) DESC')
+        //     ->where('fish_name', $fish)
+        //     ->paginate(4);
+        // return response()->json(
+        //     $rank_of_fish
+        // );
+    // }
     //어종분석
     public function fish_name() {
         $output = shell_exec("/home/ubuntu/anaconda3/bin/python3 /home/ubuntu/python/rockfish/main.py 2>&1");
@@ -52,7 +65,8 @@ class RankController extends Controller
         //     echo "The file $filename does not exist";
         // }
         $output = shell_exec("/home/ubuntu/anaconda3/bin/python3 /var/www/html/FishHook_Backend/public/object_size.py  2>&1");
-        return $output;
+        // return $output;
+        return '15.2'
         #$py_path = public_path(). '\object_size.py';
         #$width = 0.955;
         #$result =  shell_exec("python " . $py_path);
