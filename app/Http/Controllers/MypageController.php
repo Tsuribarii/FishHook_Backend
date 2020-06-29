@@ -95,6 +95,7 @@ class MypageController extends Controller
                 ->where('ship_rentals.confirm',0)
                 ->join('users','ship_rentals.user_id','=','users.id')
                 ->select('ship_rentals.id','ship_id','departure_date','number_of_people','ship_rentals.created_at','users.name')
+                ->orderBy('ship_rentals.departure_date', 'desc')
                 ->get();
             
             return response()->json($rental);
@@ -126,6 +127,7 @@ class MypageController extends Controller
                 ->where('ship_rentals.confirm',1)
                 ->join('users','ship_rentals.user_id','=','users.id')
                 ->select('ship_rentals.id','ship_id','departure_date','number_of_people','ship_rentals.created_at','users.name')
+                ->orderBy('ship_rentals.departure_date', 'desc')
                 ->get();
             
             return response()->json($rental);
@@ -141,6 +143,7 @@ class MypageController extends Controller
                 ->join('ship_owners','ships.owner_id','=','ship_owners.id')
                 ->select('ship_rentals.id','ship_id','departure_date','number_of_people','cancel',
                          'ship_rentals.created_at','ships.name','ships.departure_time','ships.cost','ship_owners.owner_name')
+                ->orderBy('ship_rentals.departure_date', 'desc')
                 ->get();
 
             $timenow = date("Y-m-d");
@@ -190,6 +193,7 @@ class MypageController extends Controller
                 ->where('user_id',Auth::id())
                 ->join('users','ship_rentals.user_id','=','users.id')
                 ->select('departure_date','cancel')
+                ->orderBy('ship_rentals.departure_date', 'desc')
                 ->get();
             
             $all = count($time);
