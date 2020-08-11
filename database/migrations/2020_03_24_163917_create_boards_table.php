@@ -20,7 +20,7 @@ class CreateBoardsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->unsignedBigInteger('tide')->comment("물때");
-            $table->foreign('tide')->references('id')->on('tide_informations')->onDelete('cascade');
+            $table->foreign('tide')->references('id')->on('tide_locations')->onDelete('cascade');
 
             $table->string('title')->comment("게시글 제목");
             $table->string('species')->comment("어종 이름");
