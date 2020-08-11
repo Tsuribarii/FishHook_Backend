@@ -14,7 +14,7 @@ class TideLocationController extends Controller
      */
     public function index()
     {
-        $data = TideLocation::all()->paginate(6);
+        $data = DB::table('tide_locations')->paginate(6);
         return response()->json(
             $data
         );
