@@ -16,12 +16,6 @@ class Board extends Model
         return $this->belongsTo(User::class);
     }
 
-    // 하나의 글은 하나의 물때을 가질 수 있다
-    public function tide_informations()
-    {
-        return $this->belongsTo(TideInformation::class);
-    }
-
     // 하나의 글은 여러 댓글을 가질 수 있다
     public function comments()
     {
