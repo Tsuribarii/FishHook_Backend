@@ -16,6 +16,8 @@ class CreateTideLocationsTable extends Migration
         Schema::create('tide_locations', function (Blueprint $table) {
             $table->bigIncrements('id')->comment("위치 번호");
             $table->string('location')->comment("위치");
+            $table->string('image')->comment("사진");
+            
         });
     }
 
