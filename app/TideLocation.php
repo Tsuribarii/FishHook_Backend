@@ -8,7 +8,7 @@ class TideLocation extends Model
 {
     protected $table = 'tide_locations';
     protected $fillable = [
-        'id','location','image'
+        'id','location','image','temperature'
     ];
     
 }
