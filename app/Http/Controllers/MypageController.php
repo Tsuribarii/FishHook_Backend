@@ -171,12 +171,12 @@ class MypageController extends Controller
                 if($data->cancel ==0){
                     // 현재 시간과 비교
                     if($str_now > $str_target){     
-                        $newRental[$i]['status'] = "이용 완료";
+                        $newRental[$i]['status'] = "利用完了";
                     }else{
-                        $newRental[$i]['status'] = "이용 예정";
+                        $newRental[$i]['status'] = "利用予定";
                     }
                 }else{
-                    $newRental[$i]['status'] = "취소 환불";
+                    $newRental[$i]['status'] = "キャンセル払い戻し";
                 }
             $i++;
         }
