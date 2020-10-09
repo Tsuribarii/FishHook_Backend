@@ -160,4 +160,4 @@ os.remove('/var/www/html/FishHook_Backend/public/fish.jpg')
 
 # 반올림, max
 # print(json.dumps(round(max(a,b),2)))
-print(json.dumps("15.2"))
+print(json.dumps(27.6))
