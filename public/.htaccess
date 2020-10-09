@@ -2,7 +2,7 @@
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>
-DirectoryIndex /public/dist/index.html
+DirectoryIndex ./dist/index.html
 RewriteEngine On
 # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
@@ -14,6 +14,5 @@ RewriteEngine On
 # Handle Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ 
-    index.html [L]
+    RewriteRule ^ index.html [L]
 </IfModule>
