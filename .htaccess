@@ -3,7 +3,7 @@
         Options -MultiViews 
     </IfModule>
 RewriteEngine On
-DirectoryIndex index.html
+DirectoryIndex index.html index.php
 # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
@@ -14,5 +14,5 @@ DirectoryIndex index.html
 # Handle Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.html [L]
+    RewriteRule ^ publc/index.html [L]
 </IfModule>
