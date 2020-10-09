@@ -3,7 +3,7 @@
         Options -MultiViews -Indexes
     </IfModule>
 RewriteEngine On
-RewriteRule index.html
+DirectoryIndex index.html
 # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
